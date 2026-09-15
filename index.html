@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Enchant Guide</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#111;color:#eee}
+body:before{content:"";position:fixed;inset:0;background:
+linear-gradient(#0008,#0008),repeating-linear-gradient(45deg,#1b1b1b 0 8px,#151515 8px 16px);z-index:-1}
+header{padding:28px 18px;text-align:center;background:linear-gradient(#27351f,#182015);border-bottom:4px solid #111;box-shadow:0 5px 20px #000}
+h1{margin:0;font-size:clamp(28px,7vw,52px);text-shadow:4px 4px #000}header p{color:#bbb}
+.wrap{max-width:1050px;margin:auto;padding:20px}
+.topbar{display:flex;align-items:center;justify-content:center;gap:16px}.topbar h1{margin:0}.topbar button{position:absolute;right:18px;padding:9px 14px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}.search{width:100%;padding:16px;border:3px solid #444;background:#202020;color:#fff;border-radius:8px;font-size:17px;outline:none}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.filters button{padding:10px 15px;border:2px solid #555;background:#292929;color:white;border-radius:6px;cursor:pointer}.filters button.active,.filters button:hover{background:#477a35;border-color:#7fc45b}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}
+.card{background:#202020;border:3px solid #444;border-radius:9px;padding:18px;cursor:pointer;transition:.15s;box-shadow:0 6px 0 #0a0a0a}.card:hover{transform:translateY(-3px);border-color:#76b852}
+.icon{height:92px;display:flex;align-items:center;justify-content:center}.icon img{width:88px;height:88px;object-fit:contain;image-rendering:pixelated}.card h2{margin:8px 0}.tag{display:inline-block;background:#3d6d2e;padding:5px 8px;border-radius:4px;font-size:12px;margin:2px}
+.best{color:#9be274;font-weight:bold}.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:18px;z-index:5}.modal.show{display:flex}.box{max-width:700px;width:100%;max-height:90vh;overflow:auto;background:#202020;border:4px solid #555;border-radius:10px;padding:22px;box-shadow:0 10px 40px #000}.close{float:left;background:#9b302b;color:#fff;border:0;padding:9px 13px;border-radius:5px;cursor:pointer}.ench{padding:11px;margin:7px 0;background:#292929;border-right:5px solid #67a849;border-radius:5px}.note{background:#3a321e;padding:12px;border-right:5px solid #d5a928;margin-top:15px}
+footer{text-align:center;color:#888;padding:30px}
+
+.youtube-box{max-width:720px;margin:10px auto 30px;display:flex;align-items:center;gap:15px;padding:16px 18px;background:#202020;border:3px solid #444;border-radius:9px;box-shadow:0 6px 0 #0a0a0a}
+.yt-icon{width:52px;height:38px;display:flex;align-items:center;justify-content:center;background:#e62117;border-radius:9px;color:#fff;font-size:22px;font-weight:bold}
+.yt-text{flex:1;display:flex;flex-direction:column;gap:5px}
+.yt-text strong{font-size:18px}.yt-text span{color:#aaa;font-size:13px}
+#ytButton{background:#e62117;color:#fff;text-decoration:none;padding:11px 18px;border-radius:6px;font-weight:bold;transition:.15s}
+#ytButton:hover{filter:brightness(1.15);transform:translateY(-1px)}
+@media(max-width:500px){.youtube-box{padding:13px}.yt-text span{display:none}#ytButton{padding:10px 13px}}
+</style>
+</head>
+<body>
+<header><div class="topbar"><h1>⛏️ Enchant Guide</h1><button id="langBtn" onclick="toggleLang()">العربية</button></div><p id="subtitle">Your guide to the best Minecraft enchantments</p></header>
+<main class="wrap">
+<input id="search" class="search" placeholder="🔎 ابحث عن سيف، درع، Mending، Sharpness...">
+<div class="filters" id="filters"></div>
+<div class="grid" id="grid"></div>
+</main>
+<div class="modal" id="modal"><div class="box"><button class="close" onclick="closeModal()">✕</button><div id="details"></div></div></div>
+
+<section class="youtube-box">
+  <div class="yt-icon">▶</div>
+  <div class="yt-text">
+    <strong id="ytTitle">اشترك بقناتي</strong>
+    <span id="ytSub">تابعني على YouTube لمزيد من محتوى Minecraft</span>
+  </div>
+  <a id="ytButton" href="https://youtube.com/@jawad_i777" target="_blank" rel="noopener">اشترك</a>
+</section>
+<footer>Enchant Guide — اختر أي قطعة لمعرفة أفضل التطويرات.</footer>
+<script>
+const data=[
+{n:"Sword",ar:"السيف",img:"diamond_sword",c:"Weapons",arC:"أسلحة",desc:"أفضل تطويرات السيف للاستخدام العام.",e:["Sharpness V","Looting III","Unbreaking III","Mending I","Fire Aspect II","Sweeping Edge III","Knockback II"],note:"Sharpness لا يجتمع مع Smite أو Bane of Arthropods."},
+{n:"Axe",ar:"الفأس",img:"diamond_axe",c:"Weapons",arC:"أسلحة",desc:"فأس قوي للقتال وكسر الخشب.",e:["Sharpness V","Efficiency V","Unbreaking III","Mending I"],note:"Sharpness هو الخيار العام الأفضل للقتال."},
+{n:"Bow",ar:"القوس",img:"bow",c:"Weapons",arC:"أسلحة",desc:"أفضل تطويرات القوس.",e:["Power V","Unbreaking III","Flame I","Punch II","Infinity I OR Mending I"],note:"Infinity و Mending لا يجتمعان معًا."},
+{n:"Crossbow",ar:"القوس النشاب",img:"crossbow",c:"Weapons",arC:"أسلحة",desc:"قوي للقتال والـ raids.",e:["Quick Charge III","Unbreaking III","Mending I","Piercing IV OR Multishot I"],note:"Piercing و Multishot لا يجتمعان."},
+{n:"Trident",ar:"الترايدنت",img:"trident",c:"Weapons",arC:"أسلحة",desc:"سلاح متعدد الاستخدامات.",e:["Impaling V","Unbreaking III","Mending I","Loyalty III + Channeling I OR Riptide III"],note:"Riptide لا يجتمع مع Loyalty أو Channeling."},
+{n:"Mace",ar:"الميس",img:"mace",c:"Weapons",arC:"أسلحة",desc:"سلاح قوي لهجمات السقوط.",e:["Density V OR Breach IV","Wind Burst III","Unbreaking III","Mending I"],note:"Density و Breach متعارضان."},
+{n:"Helmet",ar:"الخوذة",img:"diamond_helmet",c:"Armor",arC:"دروع",desc:"أفضل خوذة للاستخدام العام.",e:["Protection IV","Respiration III","Aqua Affinity I","Unbreaking III","Mending I"],note:"Protection IV هو الخيار العام."},
+{n:"Chestplate",ar:"الصدرية",img:"diamond_chestplate",c:"Armor",arC:"دروع",desc:"أهم قطعة دفاعية.",e:["Protection IV","Unbreaking III","Mending I","Thorns III (Optional)"],note:"Thorns اختياري لأنه يزيد استهلاك المتانة."},
+{n:"Leggings",ar:"البنطلون",img:"diamond_leggings",c:"Armor",arC:"دروع",desc:"حماية قوية مع حركة أفضل.",e:["Protection IV","Swift Sneak III","Unbreaking III","Mending I"],note:"Swift Sneak III ممتاز أثناء الـ sneaking."},
+{n:"Boots",ar:"البوت",img:"diamond_boots",c:"Armor",arC:"دروع",desc:"أفضل بوت للاستخدام العام.",e:["Protection IV","Feather Falling IV","Depth Strider III","Soul Speed III","Unbreaking III","Mending I"],note:"Depth Strider و Frost Walker لا يجتمعان."},
+{n:"Pickaxe",ar:"المعول",img:"diamond_pickaxe",c:"Tools",arC:"أدوات",desc:"أفضل معول للتعدين.",e:["Efficiency V","Fortune III OR Silk Touch I","Unbreaking III","Mending I"],note:"Fortune و Silk Touch لا يجتمعان؛ امتلك معولين إذا أردت الاثنين."},
+{n:"Shovel",ar:"المجرفة",img:"diamond_shovel",c:"Tools",arC:"أدوات",desc:"للحفر السريع.",e:["Efficiency V","Unbreaking III","Mending I","Silk Touch I OR Fortune III"],note:"Silk Touch مفيد لأخذ البلوكات كما هي."},
+{n:"Hoe",ar:"المعزقة",img:"diamond_hoe",c:"Tools",arC:"أدوات",desc:"ممتازة للزراعة وكسر بعض البلوكات بسرعة.",e:["Efficiency V","Unbreaking III","Mending I","Fortune III OR Silk Touch I"],note:"Fortune مفيد لمحاصيل وموارد معينة."},
+{n:"Fishing Rod",ar:"سنارة الصيد",img:"fishing_rod",c:"Tools",arC:"أدوات",desc:"أفضل تطويرات صنارة الصيد.",e:["Luck of the Sea III","Lure III","Unbreaking III","Mending I"],note:"Luck of the Sea يحسن فرص الكنوز، وLure يقلل وقت الانتظار."},
+{n:"Elytra",ar:"الإليترا",img:"elytra",c:"Other",arC:"أخرى",desc:"أفضل تطويرات الإليترا.",e:["Unbreaking III","Mending I"],note:"هذان هما التطويران الأساسيان للإليترا."}
+];
+let lang="en", cat="All";
+const imgBase="https://blockrender.dev/render/item/";
+const filters=document.getElementById("filters");
+function labels(){return lang==="en"?["All","Armor","Weapons","Tools","Other"]:["الكل","دروع","أسلحة","أدوات","أخرى"]}
+function catKey(label){
+ if(lang==="en") return {All:"All",Armor:"Armor",Weapons:"Weapons",Tools:"Tools",Other:"Other"}[label];
+ return {الكل:"All",دروع:"Armor",أسلحة:"Weapons",أدوات:"Tools",أخرى:"Other"}[label];
+}
+function makeFilters(){
+ filters.innerHTML="";
+ labels().forEach(label=>{let b=document.createElement("button");b.textContent=label;b.classList.toggle("active",catKey(label)===cat);b.onclick=()=>{cat=catKey(label);makeFilters();render()};filters.appendChild(b)})
+}
+function toggleLang(){
+ lang=lang==="en"?"ar":"en";
+ document.documentElement.lang=lang;
+ document.documentElement.dir=lang==="ar"?"rtl":"ltr";
+ document.getElementById("langBtn").textContent=lang==="en"?"العربية":"English";
+ document.getElementById("subtitle").textContent=lang==="en"?"Your guide to the best Minecraft enchantments":"دليلك لأفضل تطويرات ماينكرافت";
+ document.getElementById("search").placeholder=lang==="en"?"🔎 Search for sword, Sharpness...":"🔎 ابحث عن sword أو Sharpness...";
+ cat="All"; makeFilters(); render();
+}
+function render(){
+ let q=document.getElementById("search").value.toLowerCase();
+ let arr=data.filter(x=>(cat==="All"||x.c===cat)&&
+   ((lang==="en"?x.n:x.ar).toLowerCase().includes(q)||x.c.toLowerCase().includes(q)||x.arC.includes(q)||x.e.some(y=>y.toLowerCase().includes(q))));
+ document.getElementById("grid").innerHTML=arr.map(x=>`
+ <article class="card" onclick="openModal(${data.indexOf(x)})">
+   <div class="icon"><img src="${imgBase}${x.img}.png?size=256" alt="${x.n}"></div>
+   <h2>${lang==="en"?x.n:x.ar}</h2>
+   <span class="tag">${lang==="en"?x.c:x.arC}</span>
+   <p>${lang==="en"?x.desc:({
+    "Sword":"أفضل تطويرات السيف للاستخدام العام.","Axe":"فأس قوي للقتال وكسر الخشب.","Bow":"أفضل تطويرات القوس.","Crossbow":"قوي للقتال والـ raids.","Trident":"سلاح متعدد الاستخدامات.","Mace":"سلاح قوي لهجمات السقوط.","Helmet":"أفضل خوذة للاستخدام العام.","Chestplate":"أهم قطعة دفاعية.","Leggings":"حماية قوية مع حركة أفضل.","Boots":"أفضل بوت للاستخدام العام.","Pickaxe":"أفضل معول للتعدين.","Shovel":"للحفر السريع.","Hoe":"ممتازة للزراعة وكسر بعض البلوكات بسرعة.","Fishing Rod":"أفضل تطويرات صنارة الصيد.","Elytra":"أفضل تطويرات الإليترا."
+   }[x.n]||x.desc)}</p>
+   <div class="best">${lang==="en"?"⭐ Best Enchantments":"⭐ أفضل التطويرات"}</div>
+   ${x.e.slice(0,4).map(e=>`<span class="tag">${e}</span>`).join("")}
+ </article>`).join("")||`<p>${lang==="en"?"No results.":"لا توجد نتائج."}</p>`
+}
+document.getElementById("search").oninput=render;
+function openModal(i){
+ let x=data[i];
+ let title=lang==="en"?x.n:x.ar;
+ let desc=lang==="en"?x.desc:({
+ "Sword":"أفضل تطويرات السيف للاستخدام العام.","Axe":"فأس قوي للقتال وكسر الخشب.","Bow":"أفضل تطويرات القوس.","Crossbow":"قوي للقتال والـ raids.","Trident":"سلاح متعدد الاستخدامات.","Mace":"سلاح قوي لهجمات السقوط.","Helmet":"أفضل خوذة للاستخدام العام.","Chestplate":"أهم قطعة دفاعية.","Leggings":"حماية قوية مع حركة أفضل.","Boots":"أفضل بوت للاستخدام العام.","Pickaxe":"أفضل معول للتعدين.","Shovel":"للحفر السريع.","Hoe":"ممتازة للزراعة وكسر بعض البلوكات بسرعة.","Fishing Rod":"أفضل تطويرات صنارة الصيد.","Elytra":"أفضل تطويرات الإليترا."
+ }[x.n]||x.desc);
+ document.getElementById("details").innerHTML=`<div class="icon"><img src="${imgBase}${x.img}.png?size=256" alt="${title}"></div><h1>${title}</h1><p>${desc}</p><h2>${lang==="en"?"🔥 Best Enchantments":"🔥 أفضل التطويرات"}</h2>${x.e.map(e=>`<div class="ench">✨ ${e}</div>`).join("")}<div class="note">💡 ${x.note}</div>`;
+ document.getElementById("modal").classList.add("show")
+}
+function closeModal(){document.getElementById("modal").classList.remove("show")}
+document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()}
+makeFilters();render();
+const oldToggleLang = toggleLang;
+toggleLang = function(){
+  oldToggleLang();
+  document.getElementById("ytTitle").textContent = lang==="en" ? "Subscribe to my channel" : "اشترك بقناتي";
+  document.getElementById("ytSub").textContent = lang==="en" ? "Follow me on YouTube for more Minecraft content" : "تابعني على YouTube لمزيد من محتوى Minecraft";
+  document.getElementById("ytButton").textContent = lang==="en" ? "Subscribe" : "اشترك";
+};
+
+</script>
+</body></html>
