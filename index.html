@@ -12,6 +12,7 @@
 <meta property="og:description" content="دليل تطويرات Minecraft وأفضل Enchantments للأدوات والأسلحة.">
 <meta property="og:type" content="website">
 <script src="https://cdn.jsdelivr.net/npm/skinview3d@3.4.2/bundles/skinview3d.bundle.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#111;color:#eee}
 body:before{content:"";position:fixed;inset:0;background:
@@ -393,6 +394,13 @@ const skin3dCanvas=document.getElementById('skin3d');
 let skinViewer=null;
 let skinDraftData=DEFAULT_SKIN_DATA_URL;
 
+// Shared online skin gallery (Supabase). Fill these two values after creating your project.
+const SUPABASE_URL = 'YOUR_SUPABASE_URL';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const supabaseReady = SUPABASE_URL.startsWith('https://') && !SUPABASE_URL.includes('YOUR_') && !SUPABASE_ANON_KEY.includes('YOUR_') && window.supabase;
+const supabaseClient = supabaseReady ? window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY) : null;
+const SKIN_BUCKET='skins';
+
 function storageKey(){ return 'mineenchantt_minecraft_skins_v2'; }
 function readGallery(){
   try { return JSON.parse(localStorage.getItem(storageKey()) || '[]'); }
@@ -400,14 +408,36 @@ function readGallery(){
 }
 function writeGallery(items){
   try { localStorage.setItem(storageKey(), JSON.stringify(items)); return true; }
-  catch(e){ alert(lang==='en'?'Browser storage is full. Delete an old skin and try again.':'مساحة التخزين في المتصفح ممتلئة. احذف سكن قديم وحاول مرة أخرى.'); return false; }
+  catch(e){ alert(lang==='en'?'Browser storage is full. The online gallery is not configured yet.':'مساحة التخزين في المتصفح ممتلئة. معرض السكنات الأونلاين غير مربوط بعد.'); return false; }
+}
+
+async function readSharedGallery(){
+  if(!supabaseClient) return readGallery();
+  const {data,error}=await supabaseClient.from('minecraft_skins').select('id,name,image_url,created_at').order('created_at',{ascending:false});
+  if(error){ console.error(error); return readGallery(); }
+  return (data||[]).map(x=>({id:x.id,name:x.name,image:x.image_url,createdAt:x.created_at}));
+}
+
+async function saveSharedSkin(name,dataUrl){
+  if(!supabaseClient) return {ok:false, local:true};
+  try{
+    const blob=await (await fetch(dataUrl)).blob();
+    const filePath=`${crypto.randomUUID()}.png`;
+    const upload=await supabaseClient.storage.from(SKIN_BUCKET).upload(filePath,blob,{contentType:'image/png',upsert:false});
+    if(upload.error) throw upload.error;
+    const publicUrl=supabaseClient.storage.from(SKIN_BUCKET).getPublicUrl(filePath).data.publicUrl;
+    const row=await supabaseClient.from('minecraft_skins').insert({name,image_url:publicUrl,storage_path:filePath}).select('id,name,image_url,created_at').single();
+    if(row.error) throw row.error;
+    return {ok:true,item:{id:row.data.id,name:row.data.name,image:row.data.image_url,createdAt:row.data.created_at}};
+  }catch(e){
+    console.error(e);
+    return {ok:false,error:e};
+  }
 }
 
 function init3DViewer(){
   if(skinViewer || !window.skinview3d) return;
-  skinViewer=new skinview3d.SkinViewer({
-    canvas:skin3dCanvas,width:360,height:460,skin:skinDraftData
-  });
+  skinViewer=new skinview3d.SkinViewer({canvas:skin3dCanvas,width:360,height:460,skin:skinDraftData});
   skinViewer.background=0x101820;
   skinViewer.fov=55;
   skinViewer.zoom=.82;
@@ -418,23 +448,11 @@ function init3DViewer(){
   controls.enableZoom=true;
 }
 
-function update3DSkin(){
-  if(!skinViewer || !window.skinview3d) return;
-  skinViewer.loadSkin(skinDraftData).catch(()=>{});
-}
+function update3DSkin(){ if(!skinViewer || !window.skinview3d) return; skinViewer.loadSkin(skinDraftData).catch(()=>{}); }
 function toggleSkinRotate(){ if(skinViewer) skinViewer.autoRotate=!skinViewer.autoRotate; }
 function skinZoom(mult){ if(skinViewer) skinViewer.zoom=Math.max(.35,Math.min(2,skinViewer.zoom*mult)); }
-function resetSkinView(){
-  if(!skinViewer) return;
-  skinViewer.autoRotate=false;
-  skinViewer.zoom=.82;
-}
-function clearSkinDraft(){
-  skinDraftData=DEFAULT_SKIN_DATA_URL;
-  document.getElementById('skinName').value='';
-  update3DSkin();
-  document.getElementById('skinUpload').value='';
-}
+function resetSkinView(){ if(!skinViewer) return; skinViewer.autoRotate=false; skinViewer.zoom=.82; }
+function clearSkinDraft(){ skinDraftData=DEFAULT_SKIN_DATA_URL; document.getElementById('skinName').value=''; update3DSkin(); document.getElementById('skinUpload').value=''; }
 
 function validateSkinFile(file){
   if(!file) return false;
@@ -442,6 +460,7 @@ function validateSkinFile(file){
     alert(lang==='en'?'Please upload a PNG, JPG, or WEBP Minecraft skin.':'ارفع سكن Minecraft بصيغة PNG أو JPG أو WEBP.');
     return false;
   }
+  if(file.size>2*1024*1024){ alert(lang==='en'?'Skin file must be 2 MB or smaller.':'حجم السكن يجب أن يكون 2 ميغابايت أو أقل.'); return false; }
   return true;
 }
 function loadUploadedFile(file){
@@ -450,57 +469,37 @@ function loadUploadedFile(file){
   reader.onload=()=>{
     const img=new Image();
     img.onload=()=>{
-      // Minecraft skins are normally 64x64. We preserve that format for reliable 3D rendering.
-      const out=document.createElement('canvas');
-      out.width=64; out.height=64;
-      const c=out.getContext('2d');
-      c.imageSmoothingEnabled=false;
-      c.clearRect(0,0,64,64);
-      const w=img.naturalWidth||img.width, h=img.naturalHeight||img.height;
+      const out=document.createElement('canvas'); out.width=64; out.height=64;
+      const c=out.getContext('2d'); c.imageSmoothingEnabled=false; c.clearRect(0,0,64,64);
+      const w=img.naturalWidth||img.width,h=img.naturalHeight||img.height;
       if((w===64&&h===64)||(w===128&&h===128)) c.drawImage(img,0,0,64,64);
       else if(w===64&&h===32) c.drawImage(img,0,0,64,32);
-      else {
-        const scale=Math.min(64/w,64/h);
-        const dw=Math.max(1,Math.round(w*scale)), dh=Math.max(1,Math.round(h*scale));
-        c.drawImage(img,0,0,w,h,Math.floor((64-dw)/2),Math.floor((64-dh)/2),dw,dh);
-      }
-      skinDraftData=out.toDataURL('image/png');
-      update3DSkin();
-      if(!document.getElementById('skinName').value.trim()){
-        document.getElementById('skinName').value=file.name.replace(/\.[^.]+$/,'').slice(0,40);
-      }
+      else { const scale=Math.min(64/w,64/h),dw=Math.max(1,Math.round(w*scale)),dh=Math.max(1,Math.round(h*scale)); c.drawImage(img,0,0,w,h,Math.floor((64-dw)/2),Math.floor((64-dh)/2),dw,dh); }
+      skinDraftData=out.toDataURL('image/png'); update3DSkin();
+      if(!document.getElementById('skinName').value.trim()) document.getElementById('skinName').value=file.name.replace(/\.[^.]+$/,'').slice(0,40);
     };
-    img.onerror=()=>alert(lang==='en'?'Could not read this skin image.':'تعذر قراءة صورة السكن.');
-    img.src=reader.result;
+    img.onerror=()=>alert(lang==='en'?'Could not read this skin image.':'تعذر قراءة صورة السكن.'); img.src=reader.result;
   };
   reader.readAsDataURL(file);
 }
 
-document.getElementById('skinUpload').addEventListener('change',e=>{
-  const f=e.target.files[0];
-  if(f) loadUploadedFile(f);
-  e.target.value='';
-});
+document.getElementById('skinUpload').addEventListener('change',e=>{ const f=e.target.files[0]; if(f) loadUploadedFile(f); e.target.value=''; });
 
-function saveSkinToGallery(){
+async function saveSkinToGallery(){
   const name=(document.getElementById('skinName').value||'').trim();
-  if(!name){
-    alert(lang==='en'?'Please enter a skin name first.':'اكتب اسم السكن أولاً.');
-    document.getElementById('skinName').focus();
-    return;
+  if(!name){ alert(lang==='en'?'Please enter a skin name first.':'اكتب اسم السكن أولاً.'); document.getElementById('skinName').focus(); return; }
+  if(!skinDraftData || skinDraftData===DEFAULT_SKIN_DATA_URL){ alert(lang==='en'?'Choose a skin file first.':'اختر ملف السكن أولاً.'); return; }
+  const btn=document.getElementById('saveSkinBtn');
+  if(btn) btn.disabled=true;
+  if(supabaseClient){
+    const result=await saveSharedSkin(name,skinDraftData);
+    if(result.ok){ closeUploadModal('skin'); clearSkinDraft(); await renderSkinGallery(); alert(lang==='en'?'Skin published for everyone.':'تم نشر السكن للجميع بنجاح.'); }
+    else alert(lang==='en'?'Could not publish the skin online. Check your Supabase settings.':'تعذر نشر السكن أونلاين. تحقق من إعدادات Supabase.');
+  }else{
+    const items=readGallery(); items.unshift({id:'skin_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),name,image:skinDraftData,createdAt:new Date().toISOString()});
+    if(writeGallery(items)){ renderSkinGallery(); closeUploadModal('skin'); alert(lang==='en'?'Skin published locally. Configure Supabase to share it with everyone.':'تم حفظ السكن على هذا الجهاز. اربط Supabase ليظهر للجميع.'); }
   }
-  const items=readGallery();
-  items.unshift({
-    id:'skin_'+Date.now()+'_'+Math.random().toString(36).slice(2,8),
-    name:name,
-    image:skinDraftData,
-    createdAt:new Date().toISOString()
-  });
-  if(writeGallery(items)){
-    renderSkinGallery();
-    closeUploadModal('skin');
-    alert(lang==='en'?'Skin published successfully.':'تم نشر السكن بنجاح.');
-  }
+  if(btn) btn.disabled=false;
 }
 
 function downloadSkinData(data,name){
@@ -511,53 +510,26 @@ function downloadSkinData(data,name){
   a.click();
   a.remove();
 }
-function downloadGallerySkin(id){
-  const item=readGallery().find(x=>x.id===id);
+async function downloadGallerySkin(id){
+  const items=await readSharedGallery(); const item=items.find(x=>String(x.id)===String(id));
   if(item) downloadSkinData(item.image,item.name);
 }
 function deleteGallerySkin(id){
-  const items=readGallery().filter(x=>x.id!==id);
-  if(writeGallery(items)) renderSkinGallery();
+  // Public gallery deletion is intentionally disabled because there is no login/ownership system yet.
+  alert(lang==='en'?'Public skins cannot be deleted without an account system.':'لا يمكن حذف السكنات العامة بدون نظام حسابات وملكية.');
 }
-function useGallerySkin(id){
-  const item=readGallery().find(x=>x.id===id);
-  if(!item) return;
-  skinDraftData=item.image;
-  document.getElementById('skinName').value=item.name;
-  update3DSkin();
-  window.scrollTo({top:0,behavior:'smooth'});
+async function useGallerySkin(id){
+  const items=await readSharedGallery(); const item=items.find(x=>String(x.id)===String(id));
+  if(!item) return; skinDraftData=item.image; document.getElementById('skinName').value=item.name; update3DSkin(); window.scrollTo({top:0,behavior:'smooth'});
 }
-
-function renderSkinGallery(){
+async function renderSkinGallery(){
   const gallery=document.getElementById('skinGallery');
-  const items=readGallery();
+  const items=await readSharedGallery();
   const q=(document.getElementById('skinGallerySearch')?.value||'').trim().toLowerCase();
   const filtered=items.filter(item=>item.name.toLowerCase().includes(q));
-  if(!filtered.length){
-    gallery.innerHTML='<div class="empty-gallery">'+(lang==='en'?'No skins yet. Upload the first one!':'لا توجد سكنات بعد. ارفع أول سكن!')+'</div>';
-    return;
-  }
-  gallery.innerHTML=filtered.map(item=>`
-    <article class="skin-card">
-      <div class="skin-card-view"><canvas class="gallery-skin-canvas" data-skin="${item.id}" width="300" height="300"></canvas></div>
-      <h3>${escapeHtml(item.name)}</h3>
-      <div class="skin-card-meta">${lang==='en'?'Minecraft Skin':'سكن Minecraft'}</div>
-      <div class="skin-card-actions">
-        <button onclick="downloadGallerySkin('${item.id}')">⬇️ ${lang==='en'?'Download':'تنزيل'}</button>
-        <button onclick="useGallerySkin('${item.id}')">👁️ ${lang==='en'?'Preview':'معاينة'}</button>
-        <button onclick="deleteGallerySkin('${item.id}')">🗑️ ${lang==='en'?'Delete':'حذف'}</button>
-      </div>
-    </article>`).join('');
-
-  document.querySelectorAll('.gallery-skin-canvas').forEach(canvas=>{
-    const item=filtered.find(x=>x.id===canvas.dataset.skin);
-    if(!item || !window.skinview3d) return;
-    try{
-      const v=new skinview3d.SkinViewer({canvas,width:300,height:300,skin:item.image});
-      v.background=0x101820; v.fov=50; v.zoom=.9; v.autoRotate=true;
-      canvas._skinViewer=v;
-    }catch(e){}
-  });
+  if(!filtered.length){ gallery.innerHTML='<div class="empty-gallery">'+(lang==='en'?'No skins yet. Upload the first one!':'لا توجد سكنات بعد. ارفع أول سكن!')+'</div>'; return; }
+  gallery.innerHTML=filtered.map(item=>`<article class="skin-card"><div class="skin-card-view"><canvas class="gallery-skin-canvas" data-skin="${item.id}" width="300" height="300"></canvas></div><h3>${escapeHtml(item.name)}</h3><div class="skin-card-meta">${lang==='en'?'Minecraft Skin':'سكن Minecraft'}</div><div class="skin-card-actions"><button onclick="downloadGallerySkin('${item.id}')">⬇️ ${lang==='en'?'Download':'تنزيل'}</button><button onclick="useGallerySkin('${item.id}')">👁️ ${lang==='en'?'Preview':'معاينة'}</button></div></article>`).join('');
+  document.querySelectorAll('.gallery-skin-canvas').forEach(canvas=>{ const item=filtered.find(x=>String(x.id)===String(canvas.dataset.skin)); if(!item||!window.skinview3d)return; try{const v=new skinview3d.SkinViewer({canvas,width:300,height:300,skin:item.image});v.background=0x101820;v.fov=50;v.zoom=.9;v.autoRotate=true;canvas._skinViewer=v;}catch(e){console.error(e);} });
 }
 function escapeHtml(value){
   return String(value).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[m]));
