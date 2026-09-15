@@ -17,7 +17,7 @@
 body:before{content:"";position:fixed;inset:0;background:
 linear-gradient(#0008,#0008),repeating-linear-gradient(45deg,#1b1b1b 0 8px,#151515 8px 16px);z-index:-1}
 header{padding:28px 18px;text-align:center;background:linear-gradient(#27351f,#182015);border-bottom:4px solid #111;box-shadow:0 5px 20px #000}
-h1{margin:0;font-family:monospace;font-weight:900;font-size:clamp(32px,8vw,58px);letter-spacing:2px;color:#fff;text-shadow:4px 4px 0 #000,8px 8px 0 #222}header p{color:#bbb}
+h1{margin:0;font-family:monospace;font-weight:900;letter-spacing:2px;font-size:clamp(30px,7vw,56px);text-shadow:4px 4px #000;image-rendering:pixelated}header p{color:#bbb}
 .wrap{max-width:1050px;margin:auto;padding:20px}
 .topbar{display:flex;align-items:center;justify-content:center;gap:16px}.topbar h1{margin:0}.topbar button{position:absolute;right:18px;padding:9px 14px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}.search{width:100%;padding:16px;border:3px solid #444;background:#202020;color:#fff;border-radius:8px;font-size:17px;outline:none}
 .filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.filters button{padding:10px 15px;border:2px solid #555;background:#292929;color:white;border-radius:6px;cursor:pointer}.filters button.active,.filters button:hover{background:#477a35;border-color:#7fc45b}
@@ -591,62 +591,57 @@ function showPage(page){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
+function setText(id,enText,arText){
+  const el=document.getElementById(id);
+  if(el) el.textContent=lang==='en'?enText:arText;
+}
+function setPlaceholder(id,enText,arText){
+  const el=document.getElementById(id);
+  if(el) el.placeholder=lang==='en'?enText:arText;
+}
 function updateSkinLanguage(){
   const en=lang==='en';
+  setText('galleryTitle','🌐 Minecraft Skins','🌐 سكنات Minecraft');
+  setText('galleryIntro','All uploaded skins appear here. Search by skin name or upload your own.','كل السكنات المحملة تظهر هنا مباشرة. ابحث باسم السكن أو ارفع سكنك.');
+  setText('skinUploadOpenBtn','⬆️ Upload Skin','⬆️ رفع سكن');
+  setText('previewTitle','🧍 3D Preview','🧍 المعاينة ثلاثية الأبعاد');
+  setText('rotateBtn','🔄 Auto Rotate','🔄 دوران تلقائي');
+  setText('zoomOutBtn','➖ Zoom','➖ تصغير');
+  setText('zoomInBtn','➕ Zoom','➕ تكبير');
+  setText('resetBtn','🎯 Reset','🎯 إعادة ضبط');
+  setText('viewerHelp','🖱️ Drag to rotate. Use the mouse wheel or touch to zoom.','🖱️ اسحب لتدوير الشخصية، واستخدم عجلة الماوس أو اللمس للتقريب.');
+  setText('uploadTitle','📤 Add your skin','📤 أضف سكنك');
+  setText('uploadDescription','Choose a Minecraft skin, give it a name, and publish it to the gallery.','اختر سكن Minecraft، سمّه، ثم انشره في المعرض.');
+  setText('nameLabel','Skin name','اسم السكن');
+  setPlaceholder('skinName','My Awesome Skin','مثلاً: My Awesome Skin');
+  setText('saveSkinBtn','💾 Publish Skin','💾 نشر السكن');
+  const skinUploadLabel=document.querySelector('#skinUpload')?.parentElement;
+  if(skinUploadLabel) skinUploadLabel.firstChild.textContent=en?'⬆️ Choose Skin File':'⬆️ اختيار ملف السكن';
+  setPlaceholder('skinGallerySearch','🔎 Search skin name...','🔎 ابحث عن اسم السكن...');
+  setText('siteFooter','MineHub — Minecraft Enchantments & Skins','MineHub — تطويرات وسكنات Minecraft');
 
-  const setText=(id,value)=>{
-    const el=document.getElementById(id);
-    if(el) el.textContent=value;
-  };
-  const setPlaceholder=(id,value)=>{
-    const el=document.getElementById(id);
-    if(el) el.placeholder=value;
-  };
-
-  setText('galleryTitle',en?'🌐 Minecraft Skins':'🌐 سكنات Minecraft');
-  setText('galleryIntro',en?'All uploaded skins appear here. Search by skin name or upload your own.':'كل السكنات المحملة تظهر هنا مباشرة. ابحث باسم السكن أو ارفع سكنك من زر رفع سكن.');
-  setText('skinUploadOpenBtn',en?'⬆️ Upload Skin':'⬆️ رفع سكن');
-  setPlaceholder('skinGallerySearch',en?'🔎 Search skin name...':'🔎 ابحث عن اسم السكن...');
-
-  setText('previewTitle',en?'🧍 3D Preview':'🧍 المعاينة ثلاثية الأبعاد');
-  setText('rotateBtn',en?'🔄 Auto Rotate':'🔄 دوران تلقائي');
-  setText('zoomOutBtn',en?'➖ Zoom Out':'➖ تصغير');
-  setText('zoomInBtn',en?'➕ Zoom In':'➕ تكبير');
-  setText('resetBtn',en?'🎯 Reset':'🎯 إعادة ضبط');
-  setText('viewerHelp',en?'🖱️ Drag to rotate. Use wheel or touch to zoom.':'🖱️ اسحب لتدوير الشخصية، واستخدم اللمس أو العجلة للتقريب.');
-  setText('uploadTitle',en?'📤 Add your skin':'📤 أضف سكنك');
-  setText('uploadDescription',en?'Choose a Minecraft skin, give it a name, and publish it in the gallery.':'اختر سكن Minecraft، اكتب اسمه، ثم انشره في المعرض.');
-  const nameLabel=document.getElementById('nameLabel');
-  if(nameLabel && nameLabel.firstChild) nameLabel.firstChild.textContent=en?'Skin name':'اسم السكن';
-  setPlaceholder('skinName',en?'My Awesome Skin':'مثلاً: My Awesome Skin');
-  setText('saveSkinBtn',en?'💾 Publish Skin':'💾 نشر السكن');
-
-  setText('capeGalleryTitle',en?'🌐 Minecraft Capes':'🌐 Capes Minecraft');
-  setText('capeGalleryIntro',en?'All uploaded capes appear here. Search by cape name or upload your own.':'كل الـ Capes المحملة تظهر هنا مباشرة. ابحث باسم الـ Cape أو ارفع Cape من زر رفع Cape.');
-  setText('capeUploadOpenBtn',en?'⬆️ Upload Cape':'⬆️ رفع Cape');
-  setPlaceholder('capeGallerySearch',en?'🔎 Search cape name...':'🔎 ابحث عن اسم الـ Cape...');
-
-  setText('capePreviewTitle',en?'🪽 3D Cape Preview':'🪽 معاينة الـ Cape ثلاثية الأبعاد');
-  setText('capeModeBtn','🪽 Cape');
-  setText('elytraModeBtn','🦋 Elytra');
-  setText('capeRotateBtn',en?'🔄 Auto Rotate':'🔄 دوران تلقائي');
-  setText('capeZoomOutBtn',en?'➖ Zoom Out':'➖ تصغير');
-  setText('capeZoomInBtn',en?'➕ Zoom In':'➕ تكبير');
-  setText('capeResetBtn',en?'🎯 Reset':'🎯 إعادة ضبط');
-  setText('capeViewerHelp',en?'🖱️ Drag to rotate and use wheel/touch to zoom.':'🖱️ اسحب لتدوير الشكل واستخدم العجلة أو اللمس للتقريب.');
-  setText('capeUploadTitle',en?'📤 Add your cape':'📤 أضف الـ Cape');
-  setText('capeUploadDescription',en?'Use a standard Minecraft cape texture. 64×32 is recommended.':'استخدم خامة Minecraft Cape القياسية، والمقاس الموصى به 64×32.');
-  const capeNameLabel=document.getElementById('capeNameLabel');
-  if(capeNameLabel && capeNameLabel.firstChild) capeNameLabel.firstChild.textContent=en?'Cape name':'اسم الـ Cape';
-  setPlaceholder('capeName',en?'My Awesome Cape':'مثلاً: My Awesome Cape');
-  setText('saveCapeBtn',en?'💾 Publish Cape':'💾 نشر الـ Cape');
-
-  setText('siteFooter',en?'MineHub — Minecraft Enchantments & Skins':'MineHub — تطويرات وسكنات Minecraft');
-
+  setText('capeGalleryTitle','🌐 Minecraft Capes','🌐 كابات Minecraft');
+  setText('capeGalleryIntro','All uploaded capes appear here. Search by cape name or upload your own.','كل الكابات المحملة تظهر هنا مباشرة. ابحث باسم الكاب أو ارفع كابك.');
+  setText('capeUploadOpenBtn','⬆️ Upload Cape','⬆️ رفع كاب');
+  setText('capePreviewTitle','🪽 3D Cape Preview','🪽 معاينة الكاب ثلاثية الأبعاد');
+  setText('capeModeBtn','🪽 Cape','🪽 كاب');
+  setText('elytraModeBtn','🦋 Elytra','🦋 إليترا');
+  setText('capeRotateBtn','🔄 Auto Rotate','🔄 دوران تلقائي');
+  setText('capeZoomOutBtn','➖ Zoom','➖ تصغير');
+  setText('capeZoomInBtn','➕ Zoom','➕ تكبير');
+  setText('capeResetBtn','🎯 Reset','🎯 إعادة ضبط');
+  setText('capeViewerHelp','🖱️ Drag to rotate and use the wheel/touch to zoom.','🖱️ اسحب لتدوير الشكل واستخدم العجلة أو اللمس للتقريب.');
+  setText('capeUploadTitle','📤 Add your cape','📤 أضف الكاب');
+  setText('capeUploadDescription','Use a standard Minecraft cape texture. 64×32 is recommended.','استخدم خامة Minecraft Cape القياسية. المقاس الموصى به 64×32.');
+  setText('capeNameLabel','Cape name','اسم الكاب');
+  setPlaceholder('capeName','My Awesome Cape','مثلاً: My Awesome Cape');
+  setText('saveCapeBtn','💾 Publish Cape','💾 نشر الكاب');
+  const capeUploadLabel=document.querySelector('#capeUpload')?.parentElement;
+  if(capeUploadLabel) capeUploadLabel.firstChild.textContent=en?'⬆️ Choose Cape File':'⬆️ اختيار ملف الكاب';
+  setPlaceholder('capeGallerySearch','🔎 Search cape name...','🔎 ابحث عن اسم الكاب...');
   renderSkinGallery();
   renderCapeGallery();
 }
-
 
 // Minecraft Cape + Elytra gallery
 const DEFAULT_CAPE_DATA_URL=(()=>{const c=document.createElement('canvas');c.width=64;c.height=32;const x=c.getContext('2d');x.fillStyle='#000';x.fillRect(0,0,64,32);return c.toDataURL('image/png');})();
