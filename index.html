@@ -11,123 +11,453 @@
 <meta property="og:title" content="MineEnchantt - Minecraft Enchant Guide">
 <meta property="og:description" content="دليل تطويرات Minecraft وأفضل Enchantments للأدوات والأسلحة.">
 <meta property="og:type" content="website">
+<script src="https://cdn.jsdelivr.net/npm/skinview3d@3.4.2/bundles/skinview3d.bundle.js"></script>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#111;color:#eee}
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#111;color:#eee}
 body:before{content:"";position:fixed;inset:0;background:
 linear-gradient(#0008,#0008),repeating-linear-gradient(45deg,#1b1b1b 0 8px,#151515 8px 16px);z-index:-1}
 header{padding:28px 18px;text-align:center;background:linear-gradient(#27351f,#182015);border-bottom:4px solid #111;box-shadow:0 5px 20px #000}
-h1{margin:0;font-size:clamp(28px,7vw,52px);text-shadow:4px 4px #000}header p{color:#bbb}
+h1{margin:0;font-size:clamp(28px,7vw,52px);text-shadow:4px 4px #000}
+header p{color:#bbb}
 .wrap{max-width:1050px;margin:auto;padding:20px}
-.topbar{display:flex;align-items:center;justify-content:center;gap:16px}.topbar h1{margin:0}.topbar button{position:absolute;right:18px;padding:9px 14px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}.search{width:100%;padding:16px;border:3px solid #444;background:#202020;color:#fff;border-radius:8px;font-size:17px;outline:none}
-.filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}.filters button{padding:10px 15px;border:2px solid #555;background:#292929;color:white;border-radius:6px;cursor:pointer}.filters button.active,.filters button:hover{background:#477a35;border-color:#7fc45b}
+.topbar{display:flex;align-items:center;justify-content:center;gap:16px}
+.topbar h1{margin:0}
+.topbar button{position:absolute;right:18px;padding:9px 14px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}
+.search{width:100%;padding:16px;border:3px solid #444;background:#202020;color:#fff;border-radius:8px;font-size:17px;outline:none}
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin:15px 0}
+.filters button{padding:10px 15px;border:2px solid #555;background:#292929;color:white;border-radius:6px;cursor:pointer}
+.filters button.active,.filters button:hover{background:#477a35;border-color:#7fc45b}
 .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:15px}
-.card{background:#202020;border:3px solid #444;border-radius:9px;padding:18px;cursor:pointer;transition:.15s;box-shadow:0 6px 0 #0a0a0a}.card:hover{transform:translateY(-3px);border-color:#76b852}
-.icon{height:92px;display:flex;align-items:center;justify-content:center}.icon img{width:88px;height:88px;object-fit:contain;image-rendering:pixelated}.card h2{margin:8px 0}.tag{display:inline-block;background:#3d6d2e;padding:5px 8px;border-radius:4px;font-size:12px;margin:2px}
-.best{color:#9be274;font-weight:bold}.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:18px;z-index:5}.modal.show{display:flex}.box{max-width:700px;width:100%;max-height:90vh;overflow:auto;background:#202020;border:4px solid #555;border-radius:10px;padding:22px;box-shadow:0 10px 40px #000}.close{float:left;background:#9b302b;color:#fff;border:0;padding:9px 13px;border-radius:5px;cursor:pointer}.ench{padding:11px;margin:7px 0;background:#292929;border-right:5px solid #67a849;border-radius:5px}.note{background:#3a321e;padding:12px;border-right:5px solid #d5a928;margin-top:15px}
+.card{background:#202020;border:3px solid #444;border-radius:9px;padding:18px;cursor:pointer;transition:.15s;box-shadow:0 6px 0 #0a0a0a}
+.card:hover{transform:translateY(-3px);border-color:#76b852}
+.icon{height:92px;display:flex;align-items:center;justify-content:center}
+.icon img{width:88px;height:88px;object-fit:contain;image-rendering:pixelated}
+.card h2{margin:8px 0}
+.tag{display:inline-block;background:#3d6d2e;padding:5px 8px;border-radius:4px;font-size:12px;margin:2px}
+.best{color:#9be274;font-weight:bold}
+.modal{display:none;position:fixed;inset:0;background:#000b;align-items:center;justify-content:center;padding:18px;z-index:5}
+.modal.show{display:flex}
+.box{max-width:700px;width:100%;max-height:90vh;overflow:auto;background:#202020;border:4px solid #555;border-radius:10px;padding:22px;box-shadow:0 10px 40px #000}
+.close{float:left;background:#9b302b;color:#fff;border:0;padding:9px 13px;border-radius:5px;cursor:pointer}
+.ench{padding:11px;margin:7px 0;background:#292929;border-right:5px solid #67a849;border-radius:5px}
+.note{background:#3a321e;padding:12px;border-right:5px solid #d5a928;margin-top:15px}
 footer{text-align:center;color:#888;padding:30px}
 
 .youtube-box{max-width:720px;margin:10px auto 30px;display:flex;align-items:center;gap:15px;padding:16px 18px;background:#202020;border:3px solid #444;border-radius:9px;box-shadow:0 6px 0 #0a0a0a}
 .yt-icon{width:52px;height:38px;display:flex;align-items:center;justify-content:center;background:#e62117;border-radius:9px;color:#fff;font-size:22px;font-weight:bold}
 .yt-text{flex:1;display:flex;flex-direction:column;gap:5px}
-.yt-text strong{font-size:18px}.yt-text span{color:#aaa;font-size:13px}
+.yt-text strong{font-size:18px}
+.yt-text span{color:#aaa;font-size:13px}
 #ytButton{background:#e62117;color:#fff;text-decoration:none;padding:11px 18px;border-radius:6px;font-weight:bold;transition:.15s}
 #ytButton:hover{filter:brightness(1.15);transform:translateY(-1px)}
-@media(max-width:500px){.youtube-box{padding:13px}.yt-text span{display:none}#ytButton{padding:10px 13px}}
+@media(max-width:500px){
+.youtube-box{padding:13px}
+.yt-text span{display:none}
+#ytButton{padding:10px 13px}
+}
+
+.site-nav{max-width:1050px;margin:18px auto 0;padding:0 20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.nav-btn{padding:12px 18px;border:2px solid #555;background:#202020;color:#fff;border-radius:8px;cursor:pointer;font-weight:bold}
+.nav-btn.active,.nav-btn:hover{background:#477a35;border-color:#7fc45b}
+
+.skin-hero,.editor-panel,.skin-info{background:#202020;border:3px solid #444;border-radius:10px;box-shadow:0 6px 0 #0a0a0a}
+.skin-hero{padding:22px;margin-bottom:18px;text-align:center}
+.skin-hero h2{margin:0 0 8px;font-size:30px}
+.skin-hero p{color:#bbb}
+.skin-actions{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.upload-btn,.action-btn{padding:11px 16px;border:2px solid #555;background:#292929;color:#fff;border-radius:7px;cursor:pointer;font-weight:bold}
+.upload-btn:hover,.action-btn:hover{background:#477a35;border-color:#7fc45b}
+.editor-layout{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(260px,.6fr);gap:18px}
+.editor-panel{padding:18px}
+.editor-toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+.editor-toolbar input[type=color]{width:44px;height:36px;padding:2px;border:2px solid #555;background:#111;border-radius:6px;vertical-align:middle}
+.tool{padding:9px 11px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}
+.tool.active,.tool:hover{background:#477a35;border-color:#7fc45b}
+.canvas-wrap{display:flex;justify-content:center;align-items:center;overflow:auto;background:#0b0b0b;border:3px solid #444;border-radius:8px;padding:18px;min-height:420px}
+.canvas-wrap canvas{width:min(64vw,512px);height:min(64vw,512px);max-width:512px;max-height:512px;image-rendering:pixelated;image-rendering:crisp-edges;cursor:crosshair;background:repeating-conic-gradient(#2a2a2a 0 25%,#202020 0 50%) 50%/20px 20px}
+.editor-tip{color:#999;text-align:center;margin-bottom:0}
+.skin-info{padding:22px}
+.skin-info h3{font-size:25px;margin-top:0}
+.skin-info p{color:#bbb;line-height:1.6}
+.feature-list{display:flex;flex-direction:column;gap:9px;margin:18px 0}
+.skin-note{background:#3a321e;padding:12px;border-right:5px solid #d5a928;border-radius:6px;color:#ddd}
+.page-hidden{display:none!important}
+
+.skin-3d-layout{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(0,1.1fr);gap:18px;margin-bottom:18px}
+.viewer-panel{background:#202020;border:3px solid #444;border-radius:10px;box-shadow:0 6px 0 #0a0a0a;padding:18px;text-align:center}
+.viewer-panel h3{margin:0 0 10px;font-size:24px}
+.viewer-wrap{display:flex;justify-content:center;align-items:center;min-height:430px;background:radial-gradient(circle at 50% 25%,#3d5d76,#111 68%);border:3px solid #444;border-radius:8px;overflow:hidden}
+.viewer-wrap canvas{max-width:100%;height:auto}
+.viewer-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+.viewer-controls button{padding:9px 12px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}
+.viewer-controls button:hover{background:#477a35;border-color:#7fc45b}
+.viewer-help{color:#999;font-size:13px;margin:10px 0 0}
+.editor-layout{grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr)}
+@media(max-width:850px){
+.skin-3d-layout{grid-template-columns:1fr}
+.viewer-wrap{min-height:360px}
+.viewer-wrap canvas{width:100%!important;height:auto!important}
+}
+@media(max-width:750px){
+.editor-layout{grid-template-columns:1fr}
+.canvas-wrap{min-height:300px}
+.canvas-wrap canvas{width:min(88vw,512px);height:min(88vw,512px)}
+}
+
+/* Smooth animated Minecraft-style background */
+html{scroll-behavior:smooth}
+body{
+position:relative;
+isolation:isolate;
+overflow-x:hidden;
+background:#07100e;
+}
+body:before{
+content:"";
+position:fixed;
+inset:-20%;
+background:
+radial-gradient(circle at 15% 20%,rgba(62,160,91,.18),transparent 28%),
+radial-gradient(circle at 82% 18%,rgba(20,185,190,.16),transparent 25%),
+radial-gradient(circle at 50% 85%,rgba(91,68,190,.15),transparent 30%),
+linear-gradient(120deg,#07100e,#101b17 45%,#081314);
+background-size:140% 140%,120% 120%,130% 130%,180% 180%;
+animation:mineBgMove 18s ease-in-out infinite alternate;
+z-index:-2;
+pointer-events:none;
+}
+body:after{
+content:"";
+position:fixed;
+inset:0;
+background-image:
+linear-gradient(115deg,transparent 0 46%,rgba(255,255,255,.025) 47%,transparent 48%),
+radial-gradient(circle at 25% 70%,rgba(120,220,150,.08) 0 1px,transparent 2px),
+radial-gradient(circle at 75% 30%,rgba(90,210,220,.07) 0 1px,transparent 2px);
+background-size:320px 320px,150px 150px,190px 190px;
+animation:pixelDrift 24s linear infinite;
+z-index:-1;
+pointer-events:none;
+}
+.bg-ambient{
+position:fixed;
+width:280px;
+height:280px;
+right:-90px;
+top:22%;
+border-radius:50%;
+background:rgba(52,196,164,.11);
+filter:blur(55px);
+animation:ambientFloat 10s ease-in-out infinite alternate;
+z-index:-1;
+pointer-events:none;
+}
+header{
+position:relative;
+overflow:hidden;
+background:linear-gradient(135deg,rgba(39,53,31,.96),rgba(12,55,49,.94),rgba(24,32,21,.96));
+background-size:220% 220%;
+animation:headerGlow 12s ease-in-out infinite alternate;
+}
+header:after{
+content:"";
+position:absolute;
+inset:0;
+background:linear-gradient(110deg,transparent 20%,rgba(255,255,255,.055) 45%,transparent 70%);
+transform:translateX(-120%);
+animation:headerSweep 9s ease-in-out infinite;
+pointer-events:none;
+}
+.site-nav,.card,.skin-hero,.editor-panel,.skin-info,.viewer-panel,.youtube-box{
+transition:transform .35s cubic-bezier(.22,1,.36,1),box-shadow .35s ease,border-color .35s ease;
+}
+.card:hover{
+transform:translateY(-6px) scale(1.01);
+box-shadow:0 12px 28px rgba(0,0,0,.38),0 6px 0 #0a0a0a;
+}
+@keyframes mineBgMove{
+0%{background-position:0% 20%,100% 0%,20% 100%,0% 50%}
+100%{background-position:100% 80%,0% 100%,80% 0%,100% 50%}
+}
+@keyframes pixelDrift{
+from{background-position:0 0,0 0,0 0}
+to{background-position:80px 40px,90px -60px,-70px 80px}
+}
+@keyframes ambientFloat{
+from{transform:translate3d(0,0,0) scale(1)}
+to{transform:translate3d(-120px,70px,0) scale(1.25)}
+}
+@keyframes headerGlow{
+from{background-position:0% 50%}
+to{background-position:100% 50%}
+}
+@keyframes headerSweep{
+0%,55%{transform:translateX(-120%)}
+75%,100%{transform:translateX(120%)}
+}
+@media(prefers-reduced-motion:reduce){
+body:before,body:after,.bg-ambient,header,header:after{animation:none}
+*{scroll-behavior:auto!important}
+}
+
+.skin-upload-layout{display:grid;grid-template-columns:minmax(320px,.9fr) minmax(260px,.7fr);gap:18px;margin-bottom:22px}
+.field-label{display:flex;flex-direction:column;gap:8px;font-weight:bold;margin:18px 0}
+.skin-name-input{width:100%;padding:13px;border:2px solid #555;background:#111;color:#fff;border-radius:7px;font-size:16px;outline:none}
+.skin-name-input:focus{border-color:#7fc45b}
+.save-skin-btn{width:100%;padding:13px 16px;border:2px solid #6d9d54;background:#477a35;color:#fff;border-radius:7px;cursor:pointer;font-weight:bold;font-size:16px}
+.save-skin-btn:hover{filter:brightness(1.12)}
+.gallery-header{margin:24px 0 14px}
+.gallery-header h2{margin:0 0 6px}
+.gallery-header p{color:#aaa}
+.skin-gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(245px,1fr));gap:16px}
+.skin-card{background:#202020;border:3px solid #444;border-radius:10px;padding:14px;box-shadow:0 6px 0 #0a0a0a}
+.skin-card:hover{border-color:#76b852}
+.skin-card-view{height:300px;background:radial-gradient(circle at 50% 25%,#3d5d76,#111 68%);border-radius:7px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.skin-card-view canvas{width:100%;height:100%;display:block}
+.skin-card h3{margin:12px 0 8px;word-break:break-word}
+.skin-card-meta{color:#999;font-size:12px;margin-bottom:10px}
+.skin-card-actions{display:flex;gap:8px;flex-wrap:wrap}
+.skin-card-actions button{flex:1;padding:9px;border:2px solid #555;background:#292929;color:#fff;border-radius:6px;cursor:pointer}
+.skin-card-actions button:hover{background:#477a35;border-color:#7fc45b}
+.empty-gallery{padding:30px;text-align:center;color:#999;background:#202020;border:3px dashed #444;border-radius:10px;grid-column:1/-1}
+.maintenance-box{padding:24px;text-align:center;background:#3a321e;border:3px solid #8c6e27;border-radius:10px;color:#ddd}
+.maintenance-box strong{display:block;font-size:24px;margin-bottom:8px}
+
+.cape-mode-tabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0 18px}
+.cape-mode-tabs button{flex:1;min-width:130px;padding:11px 14px;border:2px solid #555;background:#292929;color:#fff;border-radius:7px;cursor:pointer;font-weight:bold}
+.cape-mode-tabs button.active,.cape-mode-tabs button:hover{background:#477a35;border-color:#7fc45b}
+.cape-card-view{height:300px;background:radial-gradient(circle at 50% 25%,#3d5d76,#111 68%);border-radius:7px;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cape-card-view canvas{width:100%;height:100%;display:block}
+.cape-badge{display:inline-block;background:#3d6d2e;padding:5px 8px;border-radius:4px;font-size:12px;margin-bottom:8px}
+.cape-upload-note{margin-top:12px;color:#aaa;font-size:13px;line-height:1.5}
+@media(max-width:850px){.skin-upload-layout{grid-template-columns:1fr}}
 </style>
 </head>
+
 <body>
-<header><div class="topbar"><h1>⛏️ Enchant Guide</h1><button id="langBtn" onclick="toggleLang()">العربية</button></div><p id="subtitle">Your guide to the best Minecraft enchantments</p></header>
+<div class="bg-ambient" aria-hidden="true"></div>
+
+<header>
+<div class="topbar">
+<h1 id="siteTitle">⛏️ MineEnchantt</h1>
+<button id="langBtn" onclick="toggleLang()">العربية</button>
+</div>
+<p id="subtitle">Minecraft enchantments and skins in one place</p>
+</header>
+
+<nav class="site-nav">
+<button class="nav-btn active" id="enchantNav" onclick="showPage('enchant')">✨ Minecraft Enchantment</button>
+<button class="nav-btn" id="skinNav" onclick="showPage('skins')">🧑 Minecraft Skins</button>
+<button class="nav-btn" id="capeNav" onclick="showPage('capes')">🪽 Minecraft Cape</button>
+</nav>
+
 <main class="wrap">
+
+<section id="enchantPage">
 <input id="search" class="search" placeholder="🔎 ابحث عن سيف، درع، Mending، Sharpness...">
 <div class="filters" id="filters"></div>
 <div class="grid" id="grid"></div>
+</section>
+
+<section id="skinsPage" class="skin-page" style="display:none">
+
+<div class="skin-hero">
+<h2 id="skinPageTitle">🧑 Minecraft Skin</h2>
+<p id="skinIntro">Upload your Minecraft skin, give it a name, preview it in 3D, and share it on this page.</p>
+
+<div class="skin-actions">
+<label class="upload-btn" id="skinUploadLabel">⬆️ Upload Skin
+<input id="skinUpload" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+</label>
+<button class="action-btn" id="clearUploadBtn" onclick="clearSkinDraft()">🗑️ Clear</button>
+</div>
+</div>
+
+<div class="skin-upload-layout">
+
+<div class="viewer-panel">
+<h3 id="previewTitle">🧍 3D Preview</h3>
+<div class="viewer-wrap">
+<canvas id="skin3d" width="360" height="460"></canvas>
+</div>
+
+<div class="viewer-controls">
+<button id="rotateBtn" onclick="toggleSkinRotate()">🔄 Auto Rotate</button>
+<button id="zoomOutBtn" onclick="skinZoom(.9)">➖ Zoom</button>
+<button id="zoomInBtn" onclick="skinZoom(1.1)">➕ Zoom</button>
+<button id="resetBtn" onclick="resetSkinView()">🎯 Reset</button>
+</div>
+
+<p class="viewer-help" id="viewerHelp">🖱️ Drag to rotate. Use the mouse wheel or touch to zoom.</p>
+</div>
+
+<div class="skin-info">
+<h3 id="uploadTitle">📤 Add your skin</h3>
+
+<p id="uploadDescription">
+Choose a standard Minecraft skin PNG. The site keeps the original texture at 64×64 when possible.
+</p>
+
+<label class="field-label" id="nameLabel">
+Skin name
+<input id="skinName" class="skin-name-input" maxlength="40" placeholder="My Awesome Skin">
+</label>
+
+<button class="save-skin-btn" id="saveSkinBtn" onclick="saveSkinToGallery()">💾 Publish Skin</button>
+
+<div class="skin-note" id="storageNote">
+Your skins are saved in this browser. A shared online gallery for all visitors needs a database/backend.
+</div>
+</div>
+
+</div>
+
+<div class="gallery-header">
+<div>
+<h2 id="galleryTitle">🌐 Minecraft Skins</h2>
+<p id="galleryIntro">Skins published from this browser appear below.</p>
+</div>
+</div>
+
+<div id="skinGallery" class="skin-gallery"></div>
+
+</section>
+
+<section id="capesPage" class="skin-page" style="display:none">
+
+<div class="skin-hero">
+<h2 id="capePageTitle">🪽 Minecraft Cape</h2>
+
+<p id="capeIntro">
+Upload your Minecraft cape, give it a name, and preview it as a Cape or Elytra in 3D.
+</p>
+
+<div class="skin-actions">
+<label class="upload-btn" id="capeUploadLabel">⬆️ Upload Cape
+<input id="capeUpload" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+</label>
+
+<button class="action-btn" id="clearCapeBtn" onclick="clearCapeDraft()">🗑️ Clear</button>
+</div>
+</div>
+
+<div class="skin-upload-layout">
+
+<div class="viewer-panel">
+
+<h3 id="capePreviewTitle">🪽 3D Cape Preview</h3>
+
+<div class="cape-mode-tabs">
+<button id="capeModeBtn" class="active" onclick="setCapeMode('cape')">🪽 Cape</button>
+<button id="elytraModeBtn" onclick="setCapeMode('elytra')">🦋 Elytra</button>
+</div>
+
+<div class="viewer-wrap">
+<canvas id="cape3d" width="360" height="460"></canvas>
+</div>
+
+<div class="viewer-controls">
+<button id="capeRotateBtn" onclick="toggleCapeRotate()">🔄 Auto Rotate</button>
+<button id="capeZoomOutBtn" onclick="capeZoom(.9)">➖ Zoom</button>
+<button id="capeZoomInBtn" onclick="capeZoom(1.1)">➕ Zoom</button>
+<button id="capeResetBtn" onclick="resetCapeView()">🎯 Reset</button>
+</div>
+
+<p class="viewer-help" id="capeViewerHelp">
+🖱️ Drag to rotate and use the wheel/touch to zoom.
+</p>
+
+</div>
+
+<div class="skin-info">
+
+<h3 id="capeUploadTitle">📤 Add your cape</h3>
+
+<p id="capeUploadDescription">
+Use a standard Minecraft cape texture. 64×32 is recommended.
+</p>
+
+<label class="field-label" id="capeNameLabel">
+Cape name
+<input id="capeName" class="skin-name-input" maxlength="40" placeholder="My Awesome Cape">
+</label>
+
+<button class="save-skin-btn" id="saveCapeBtn" onclick="saveCapeToGallery()">💾 Publish Cape</button>
+
+<div class="skin-note" id="capeStorageNote">
+Capes are saved in this browser. A shared online gallery for everyone needs a database/backend.
+</div>
+
+<p class="cape-upload-note" id="capeUploadNote">
+The same uploaded texture can be previewed both as a normal cape and as an Elytra.
+</p>
+
+</div>
+</div>
+
+<div class="gallery-header">
+<div>
+<h2 id="capeGalleryTitle">🌐 Minecraft Capes</h2>
+<p id="capeGalleryIntro">Capes published from this browser appear below.</p>
+</div>
+</div>
+
+<div id="capeGallery" class="skin-gallery"></div>
+
+</section>
+
 </main>
-<div class="modal" id="modal"><div class="box"><button class="close" onclick="closeModal()">✕</button><div id="details"></div></div></div>
+
+<div class="modal" id="modal">
+<div class="box">
+<button class="close" onclick="closeModal()">✕</button>
+<div id="details"></div>
+</div>
+</div>
 
 <section class="youtube-box">
-  <div class="yt-icon">▶</div>
-  <div class="yt-text">
-    <strong id="ytTitle">اشترك بقناتي</strong>
-    <span id="ytSub">تابعني على YouTube لمزيد من محتوى Minecraft</span>
-  </div>
-  <a id="ytButton" href="https://youtube.com/@jawad_i777" target="_blank" rel="noopener">اشترك</a>
-</section>
-<footer>Enchant Guide — اختر أي قطعة لمعرفة أفضل التطويرات.</footer>
-<script>
-const data=[
-{n:"Sword",ar:"السيف",img:"diamond_sword",c:"Weapons",arC:"أسلحة",desc:"أفضل تطويرات السيف للاستخدام العام.",e:["Sharpness V","Looting III","Unbreaking III","Mending I","Fire Aspect II","Sweeping Edge III","Knockback II"],note:"Sharpness لا يجتمع مع Smite أو Bane of Arthropods."},
-{n:"Axe",ar:"الفأس",img:"diamond_axe",c:"Weapons",arC:"أسلحة",desc:"فأس قوي للقتال وكسر الخشب.",e:["Sharpness V","Efficiency V","Unbreaking III","Mending I"],note:"Sharpness هو الخيار العام الأفضل للقتال."},
-{n:"Bow",ar:"القوس",img:"bow",c:"Weapons",arC:"أسلحة",desc:"أفضل تطويرات القوس.",e:["Power V","Unbreaking III","Flame I","Punch II","Infinity I OR Mending I"],note:"Infinity و Mending لا يجتمعان معًا."},
-{n:"Crossbow",ar:"القوس النشاب",img:"crossbow",c:"Weapons",arC:"أسلحة",desc:"قوي للقتال والـ raids.",e:["Quick Charge III","Unbreaking III","Mending I","Piercing IV OR Multishot I"],note:"Piercing و Multishot لا يجتمعان."},
-{n:"Trident",ar:"الترايدنت",img:"trident",c:"Weapons",arC:"أسلحة",desc:"سلاح متعدد الاستخدامات.",e:["Impaling V","Unbreaking III","Mending I","Loyalty III + Channeling I OR Riptide III"],note:"Riptide لا يجتمع مع Loyalty أو Channeling."},
-{n:"Mace",ar:"الميس",img:"mace",c:"Weapons",arC:"أسلحة",desc:"سلاح قوي لهجمات السقوط.",e:["Density V OR Breach IV","Wind Burst III","Unbreaking III","Mending I"],note:"Density و Breach متعارضان."},
-{n:"Helmet",ar:"الخوذة",img:"diamond_helmet",c:"Armor",arC:"دروع",desc:"أفضل خوذة للاستخدام العام.",e:["Protection IV","Respiration III","Aqua Affinity I","Unbreaking III","Mending I"],note:"Protection IV هو الخيار العام."},
-{n:"Chestplate",ar:"الصدرية",img:"diamond_chestplate",c:"Armor",arC:"دروع",desc:"أهم قطعة دفاعية.",e:["Protection IV","Unbreaking III","Mending I","Thorns III (Optional)"],note:"Thorns اختياري لأنه يزيد استهلاك المتانة."},
-{n:"Leggings",ar:"البنطلون",img:"diamond_leggings",c:"Armor",arC:"دروع",desc:"حماية قوية مع حركة أفضل.",e:["Protection IV","Swift Sneak III","Unbreaking III","Mending I"],note:"Swift Sneak III ممتاز أثناء الـ sneaking."},
-{n:"Boots",ar:"البوت",img:"diamond_boots",c:"Armor",arC:"دروع",desc:"أفضل بوت للاستخدام العام.",e:["Protection IV","Feather Falling IV","Depth Strider III","Soul Speed III","Unbreaking III","Mending I"],note:"Depth Strider و Frost Walker لا يجتمعان."},
-{n:"Pickaxe",ar:"المعول",img:"diamond_pickaxe",c:"Tools",arC:"أدوات",desc:"أفضل معول للتعدين.",e:["Efficiency V","Fortune III OR Silk Touch I","Unbreaking III","Mending I"],note:"Fortune و Silk Touch لا يجتمعان؛ امتلك معولين إذا أردت الاثنين."},
-{n:"Shovel",ar:"المجرفة",img:"diamond_shovel",c:"Tools",arC:"أدوات",desc:"للحفر السريع.",e:["Efficiency V","Unbreaking III","Mending I","Silk Touch I OR Fortune III"],note:"Silk Touch مفيد لأخذ البلوكات كما هي."},
-{n:"Hoe",ar:"المعزقة",img:"diamond_hoe",c:"Tools",arC:"أدوات",desc:"ممتازة للزراعة وكسر بعض البلوكات بسرعة.",e:["Efficiency V","Unbreaking III","Mending I","Fortune III OR Silk Touch I"],note:"Fortune مفيد لمحاصيل وموارد معينة."},
-{n:"Fishing Rod",ar:"سنارة الصيد",img:"fishing_rod",c:"Tools",arC:"أدوات",desc:"أفضل تطويرات صنارة الصيد.",e:["Luck of the Sea III","Lure III","Unbreaking III","Mending I"],note:"Luck of the Sea يحسن فرص الكنوز، وLure يقلل وقت الانتظار."},
-{n:"Elytra",ar:"الإليترا",img:"elytra",c:"Other",arC:"أخرى",desc:"أفضل تطويرات الإليترا.",e:["Unbreaking III","Mending I"],note:"هذان هما التطويران الأساسيان للإليترا."}
-];
-let lang="en", cat="All";
-const imgBase="https://blockrender.dev/render/item/";
-const filters=document.getElementById("filters");
-function labels(){return lang==="en"?["All","Armor","Weapons","Tools","Other"]:["الكل","دروع","أسلحة","أدوات","أخرى"]}
-function catKey(label){
- if(lang==="en") return {All:"All",Armor:"Armor",Weapons:"Weapons",Tools:"Tools",Other:"Other"}[label];
- return {الكل:"All",دروع:"Armor",أسلحة:"Weapons",أدوات:"Tools",أخرى:"Other"}[label];
-}
-function makeFilters(){
- filters.innerHTML="";
- labels().forEach(label=>{let b=document.createElement("button");b.textContent=label;b.classList.toggle("active",catKey(label)===cat);b.onclick=()=>{cat=catKey(label);makeFilters();render()};filters.appendChild(b)})
-}
-function toggleLang(){
- lang=lang==="en"?"ar":"en";
- document.documentElement.lang=lang;
- document.documentElement.dir=lang==="ar"?"rtl":"ltr";
- document.getElementById("langBtn").textContent=lang==="en"?"العربية":"English";
- document.getElementById("subtitle").textContent=lang==="en"?"Your guide to the best Minecraft enchantments":"دليلك لأفضل تطويرات ماينكرافت";
- document.getElementById("search").placeholder=lang==="en"?"🔎 Search for sword, Sharpness...":"🔎 ابحث عن sword أو Sharpness...";
- cat="All"; makeFilters(); render();
-}
-function render(){
- let q=document.getElementById("search").value.toLowerCase();
- let arr=data.filter(x=>(cat==="All"||x.c===cat)&&
-   ((lang==="en"?x.n:x.ar).toLowerCase().includes(q)||x.c.toLowerCase().includes(q)||x.arC.includes(q)||x.e.some(y=>y.toLowerCase().includes(q))));
- document.getElementById("grid").innerHTML=arr.map(x=>`
- <article class="card" onclick="openModal(${data.indexOf(x)})">
-   <div class="icon"><img src="${imgBase}${x.img}.png?size=256" alt="${x.n}"></div>
-   <h2>${lang==="en"?x.n:x.ar}</h2>
-   <span class="tag">${lang==="en"?x.c:x.arC}</span>
-   <p>${lang==="en"?x.desc:({
-    "Sword":"أفضل تطويرات السيف للاستخدام العام.","Axe":"فأس قوي للقتال وكسر الخشب.","Bow":"أفضل تطويرات القوس.","Crossbow":"قوي للقتال والـ raids.","Trident":"سلاح متعدد الاستخدامات.","Mace":"سلاح قوي لهجمات السقوط.","Helmet":"أفضل خوذة للاستخدام العام.","Chestplate":"أهم قطعة دفاعية.","Leggings":"حماية قوية مع حركة أفضل.","Boots":"أفضل بوت للاستخدام العام.","Pickaxe":"أفضل معول للتعدين.","Shovel":"للحفر السريع.","Hoe":"ممتازة للزراعة وكسر بعض البلوكات بسرعة.","Fishing Rod":"أفضل تطويرات صنارة الصيد.","Elytra":"أفضل تطويرات الإليترا."
-   }[x.n]||x.desc)}</p>
-   <div class="best">${lang==="en"?"⭐ Best Enchantments":"⭐ أفضل التطويرات"}</div>
-   ${x.e.slice(0,4).map(e=>`<span class="tag">${e}</span>`).join("")}
- </article>`).join("")||`<p>${lang==="en"?"No results.":"لا توجد نتائج."}</p>`
-}
-document.getElementById("search").oninput=render;
-function openModal(i){
- let x=data[i];
- let title=lang==="en"?x.n:x.ar;
- let desc=lang==="en"?x.desc:({
- "Sword":"أفضل تطويرات السيف للاستخدام العام.","Axe":"فأس قوي للقتال وكسر الخشب.","Bow":"أفضل تطويرات القوس.","Crossbow":"قوي للقتال والـ raids.","Trident":"سلاح متعدد الاستخدامات.","Mace":"سلاح قوي لهجمات السقوط.","Helmet":"أفضل خوذة للاستخدام العام.","Chestplate":"أهم قطعة دفاعية.","Leggings":"حماية قوية مع حركة أفضل.","Boots":"أفضل بوت للاستخدام العام.","Pickaxe":"أفضل معول للتعدين.","Shovel":"للحفر السريع.","Hoe":"ممتازة للزراعة وكسر بعض البلوكات بسرعة.","Fishing Rod":"أفضل تطويرات صنارة الصيد.","Elytra":"أفضل تطويرات الإليترا."
- }[x.n]||x.desc);
- document.getElementById("details").innerHTML=`<div class="icon"><img src="${imgBase}${x.img}.png?size=256" alt="${title}"></div><h1>${title}</h1><p>${desc}</p><h2>${lang==="en"?"🔥 Best Enchantments":"🔥 أفضل التطويرات"}</h2>${x.e.map(e=>`<div class="ench">✨ ${e}</div>`).join("")}<div class="note">💡 ${x.note}</div>`;
- document.getElementById("modal").classList.add("show")
-}
-function closeModal(){document.getElementById("modal").classList.remove("show")}
-document.getElementById("modal").onclick=e=>{if(e.target.id==="modal")closeModal()}
-makeFilters();render();
-const oldToggleLang = toggleLang;
-toggleLang = function(){
-  oldToggleLang();
-  document.getElementById("ytTitle").textContent = lang==="en" ? "Subscribe to my channel" : "اشترك بقناتي";
-  document.getElementById("ytSub").textContent = lang==="en" ? "Follow me on YouTube for more Minecraft content" : "تابعني على YouTube لمزيد من محتوى Minecraft";
-  document.getElementById("ytButton").textContent = lang==="en" ? "Subscribe" : "اشترك";
-};
+<div class="yt-icon">▶</div>
 
-</script>
-</body></html>
+<div class="yt-text">
+<strong id="ytTitle">اشترك بقناتي</strong>
+<span id="ytSub">تابعني على YouTube لمزيد من محتوى Minecraft</span>
+</div>
+
+<a id="ytButton"
+href="https://youtube.com/@jawad_i777"
+target="_blank"
+rel="noopener">اشترك</a>
+</section>
+
+<footer id="siteFooter">
+MineEnchantt — Minecraft Enchantments & Skins
+</footer>
+
+<script>
+
+const data=[
+
+{n:"Sword",ar:"السيف",img:"diamond_sword",c:"Weapons",arC:"أسلحة",
+desc:"أفضل تطويرات السيف للاستخدام العام.",
+e:["Sharpness V","Looting III","Unbreaking III","Mending I","Fire Aspect II","Sweeping Edge III","Knockback II"],
+note:"Sharpness لا يجتمع مع Smite أو Bane of Arthropods."},
+
+{n:"Axe",ar:"الفأس",img:"diamond_axe",c:"Weapons",arC:"أسلحة",
+desc:"فأس قوي للقتال وكسر الخشب.",
+e:["Sharpness V","Efficiency V","Unbreaking III","Mending I"],
+note:"Sharpness هو الخيار العام الأفضل للقتال."},
+
+{n:"Bow",ar:"القوس",img:"bow",c:"Weapons",arC:"أسلحة",
+desc:"أفضل تطويرات القوس.",
+e:["Power V","Unbreaking III","Flame I","Punch II","Infinity I OR Mending I"],
+note:"Infinity و Mending لا يجتمعان معًا."},
+
+{n:"Crossbow",ar:"القوس النشاب",img:"crossbow",c:"Weapons",arC:"أسلحة",
+desc:"قوي للقتال والـ raids.",
+e:["Quick Charge III","Unbreaking III","Mending I","Piercing IV OR Multishot I"],
+note:"Piercing و Multishot لا يجتمعان."},
+
+{n:"Trident",ar:"الترايدنت",img:"trident",c:"Weapons",arC:"أسلحة",
+desc:"سلاح متعدد الاستخدامات.",
+e:["Impaling V
