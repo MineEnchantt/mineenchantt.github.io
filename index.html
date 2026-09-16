@@ -20,7 +20,7 @@
 <section class="hero" id="home"><div class="hero-glow"></div><div><div class="ey">MINECRAFT CREATOR HUB</div><h1>Show off your <span>best look.</span></h1><p>Upload Minecraft skins and capes, preview them in 3D, and let the community discover, like, and download your creations.</p><div class="actions"><button class="btn primary" id="heroUpload">Upload a Skin</button><button class="btn" id="explore">Explore Gallery</button></div><div class="stats"><div><b id="skinCount">0</b><small>SKINS</small></div><div><b id="capeCount">0</b><small>CAPES</small></div><div><b>3D</b><small>PREVIEW</small></div></div></div><div class="orb"><i></i><div class="mini">3D<br><b>PREVIEW</b></div></div></section>
 <section class="featured"><div><div class="ey">MINEHUB COMMUNITY</div><h2>Your style <span>belongs here.</span></h2><p>Publish a creation and build your creator profile.</p></div><button class="btn primary" id="featuredUpload">＋ Upload Creation</button></section>
 <section class="head" id="gallery"><div><div class="ey">COMMUNITY GALLERY</div><h2 id="sectionTitle">Latest Skins</h2></div><div class="tools"><label class="search">⌕ <input id="search" placeholder="Search skins..."></label><select id="sort"><option value="new">Newest</option><option value="popular">Most liked</option><option value="downloads">Most downloaded</option><option value="name">Name</option><option value="old">Oldest</option></select></div></section>
-<div class="notice" id="notice">MineHub is connected to Supabase. Public uploads, profiles, likes, downloads and owner-only deletion are enabled.</div>
+<div class="notice" id="notice">Demo mode is active. Add your Firebase Web config in <code>index.html</code> to enable public uploads, profiles, global likes, downloads and owner-only deletion.</div>
 <div class="grid" id="grid"></div><div class="empty hidden" id="empty">No creations found.</div>
 <div id="page" class="hidden"></div>
 </main>
@@ -56,19 +56,12 @@ function timeVal(x){return x.created_at?new Date(x.created_at).getTime():(x.time
 function setKind(k){currentKind=k;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.kind===k));$('sectionTitle').textContent=k==='skin'?'Latest Skins':'Latest Capes';$('search').placeholder='Search '+(k==='skin'?'skins':'capes')+'...';$('uploadTop').textContent='＋ Upload '+(k==='skin'?'Skin':'Cape');render()}
 document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{location.hash='';setKind(b.dataset.kind)});
 $('explore').onclick=()=>{location.hash='';$('gallery').scrollIntoView({behavior:'smooth'})};$('featuredUpload').onclick=()=>openUpload(currentKind);$('uploadTop').onclick=()=>openUpload(currentKind);$('heroUpload').onclick=()=>openUpload('skin');
-function clearUploadPreview(){
-  if(upViewer){upViewer.dispose();upViewer=null}
-  const c=$('upcanvas');
-  const ctx=c.getContext('2d');
-  ctx.clearRect(0,0,c.width,c.height);
-  c.width=260;c.height=300;
-} 
-function openUpload(k){clearUploadPreview();upType=k;upFile=null;$('uploadModal').classList.remove('hidden');$('fileName').textContent='↑ Choose a PNG or drop it here';$('file').value='';$('title').value='';$('creator').value=user?.user_metadata?.username||'';$('err').textContent='';document.querySelectorAll('.type').forEach(b=>b.classList.toggle('active',b.dataset.type===k))}
+function openUpload(k){upType=k;upFile=null;$('uploadModal').classList.remove('hidden');$('fileName').textContent='↑ Choose a PNG or drop it here';$('file').value='';$('title').value='';$('creator').value=user?.user_metadata?.username||'';$('err').textContent='';document.querySelectorAll('.type').forEach(b=>b.classList.toggle('active',b.dataset.type===k));if(upViewer){upViewer.dispose();upViewer=null}}
 document.querySelectorAll('.type').forEach(b=>b.onclick=()=>openUpload(b.dataset.type));document.querySelectorAll('[data-close]').forEach(x=>x.onclick=closeUpload);document.querySelectorAll('[data-vclose]').forEach(x=>x.onclick=closeViewer);
-function closeUpload(){ $('uploadModal').classList.add('hidden'); clearUploadPreview(); upFile=null; $('file').value=''; }
+function closeUpload(){ $('uploadModal').classList.add('hidden'); if(upViewer){upViewer.dispose();upViewer=null} }
 function closeViewer(){ $('viewerModal').classList.add('hidden'); if(vViewer){vViewer.dispose();vViewer=null} }
 $('file').onchange=e=>useFile(e.target.files[0]);$('drop').ondragover=e=>{e.preventDefault();$('drop').style.borderColor='var(--mint)'};$('drop').ondragleave=()=>$('drop').style.borderColor='';$('drop').ondrop=e=>{e.preventDefault();$('drop').style.borderColor='';useFile(e.dataTransfer.files[0])};
-async function useFile(f){$('err').textContent='';if(!f)return;if(f.type!=='image/png')return $('err').textContent='Only PNG files are allowed.';if(f.size>5*1024*1024)return $('err').textContent='Maximum file size is 5 MB.';clearUploadPreview();upFile=f;$('fileName').textContent=f.name;let u=URL.createObjectURL(f);try{upViewer=new skinview3d.SkinViewer({canvas:$('upcanvas'),width:260,height:300});upViewer.autoRotate=true;upViewer.autoRotateSpeed=.7;upViewer.controls.enableRotate=true;upViewer.controls.enableZoom=true;if(upType==='skin'){await upViewer.loadSkin(u)}else{await upViewer.loadSkin('https://minotar.net/skin/Steve');await upViewer.loadCape(u)}URL.revokeObjectURL(u)}catch(e){console.error(e);if(upViewer){upViewer.dispose();upViewer=null}URL.revokeObjectURL(u);$('err').textContent='Could not preview this PNG. Make sure it is a valid Minecraft skin PNG.'}}
+async function useFile(f){$('err').textContent='';if(!f)return;if(f.type!=='image/png')return $('err').textContent='Only PNG files are allowed.';if(f.size>5*1024*1024)return $('err').textContent='Maximum file size is 5 MB.';upFile=f;$('fileName').textContent=f.name;if(upViewer)upViewer.dispose();let u=URL.createObjectURL(f);upViewer=new skinview3d.SkinViewer({canvas:$('upcanvas'),width:260,height:300,skin:upType==='skin'?u:'https://minotar.net/skin/Steve'});upViewer.autoRotate=true;upViewer.autoRotateSpeed=.7;upViewer.controls.enableRotate=true;upViewer.controls.enableZoom=true;if(upType==='cape')await upViewer.loadCape(u).catch(()=>{});}
 let authMode='signin';
 function openAuth(mode='signin'){
   authMode=mode;$('authModal').classList.remove('hidden');$('authUsername').value='';$('authEmail').value='';$('authPassword').value='';$('authErr').textContent='';
@@ -94,7 +87,7 @@ $('authSubmit').onclick=async()=>{
     if(authMode==='signup'){
       result=await supabase.auth.signUp({email,password,options:{data:{username}}});
       if(result.error)throw result.error;
-      if(!result.data.session){$('authErr').textContent='Account created. Please sign in.';return;}
+      if(!result.data.session){$('authErr').textContent='Account created. Check your email to confirm your account, then sign in.';return;}
     }else{
       result=await supabase.auth.signInWithPassword({email,password});
       if(result.error)throw result.error;
