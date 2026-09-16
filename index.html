@@ -1,173 +1,88 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#080b12"><meta name="description" content="MineHub — Minecraft skins and capes community.">
-<title>MineHub — Minecraft Skins & Capes</title>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#070a10;--panel:#0f1622;--panel2:#141e2d;--line:#26344a;--text:#f5f7fb;--muted:#8592a8;--mint:#65efb0;--mint2:#35d89a;--red:#ff647d;--blue:#66a8ff}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;min-height:100vh}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.13;background-image:linear-gradient(#fff1 1px,transparent 1px),linear-gradient(90deg,#fff1 1px,transparent 1px);background-size:42px 42px}button,input,select{font:inherit}button,a{cursor:pointer}.hidden{display:none!important}.top{position:sticky;top:0;z-index:30;height:76px;padding:0 4%;display:flex;align-items:center;gap:20px;background:#070a10e8;backdrop-filter:blur(18px);border-bottom:1px solid #ffffff0d}.logo{color:#fff;text-decoration:none;font-size:21px;font-weight:900;white-space:nowrap}.logo b{color:var(--mint)}.cube{color:var(--mint);margin-right:8px}.tabs{display:flex;gap:4px;margin:auto}.tab{border:0;background:transparent;color:var(--muted);padding:11px 17px;border-radius:10px;font-weight:800}.tab.active,.tab:hover{background:var(--panel2);color:#fff}.btn{border:1px solid var(--line);background:var(--panel);color:#fff;border-radius:11px;padding:11px 16px;font-weight:800;text-decoration:none;display:inline-flex;justify-content:center;align-items:center;gap:7px}.btn:hover{border-color:#465872}.primary{border:0;background:linear-gradient(135deg,var(--mint),var(--mint2));color:#04100b}.danger{border-color:#ff647d55;color:#ff9aaa}.danger:hover{border-color:var(--red)}#authBtn{white-space:nowrap}.signed{border-color:#65efb055;color:var(--mint)}main{width:min(1240px,92%);margin:auto}.hero{min-height:440px;display:grid;grid-template-columns:1.2fr .8fr;align-items:center;position:relative}.hero-glow{position:absolute;width:500px;height:500px;right:0;top:-50px;background:radial-gradient(circle,#54a8ff20,transparent 66%);pointer-events:none}.ey{color:var(--mint);font-size:10px;letter-spacing:2px;font-weight:900}.hero h1{font-size:clamp(45px,6.5vw,82px);line-height:.96;letter-spacing:-4px;margin:12px 0 20px;max-width:780px}.hero h1 span,h2 span{color:var(--mint)}.hero p{color:var(--muted);line-height:1.7;max-width:650px;font-size:16px}.actions{display:flex;gap:10px;margin-top:24px}.stats{display:flex;gap:25px;margin-top:28px}.stats div{border-left:1px solid #2b384d;padding-left:13px}.stats b{display:block;font-size:19px}.stats small{display:block;color:#657188;font-size:8px;letter-spacing:1.5px;margin-top:3px}.orb{height:310px;display:grid;place-items:center;position:relative}.orb i{position:absolute;width:250px;height:250px;border:1px dashed #66f0b255;border-radius:50%;animation:spin 18s linear infinite}.mini{position:relative;background:#111927ee;border:1px solid #35445b;border-radius:18px;padding:32px;text-align:center;font:13px/2 "Press Start 2P";transform:rotate(-6deg);box-shadow:0 25px 70px #0008}.mini b{color:var(--mint);font-size:16px}@keyframes spin{to{transform:rotate(360deg)}}.featured{display:flex;align-items:center;justify-content:space-between;gap:20px;padding:20px 22px;margin:5px 0 34px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(100deg,#111927,#0c121d)}.featured h2{margin:3px 0 6px;font-size:24px}.featured p{margin:0;color:#78869c;font-size:12px}.head{display:flex;justify-content:space-between;align-items:end;gap:15px;margin:25px 0 18px}h2{font-size:32px;margin:5px 0}.tools{display:flex;gap:8px;flex-wrap:wrap}.search,select{height:43px;background:var(--panel);border:1px solid var(--line);border-radius:10px;color:#fff}.search{display:flex;align-items:center;padding:0 10px}.search input{border:0;outline:0;background:transparent;color:#fff;width:210px}.search input::placeholder{color:#69768c}select{padding:0 10px}.notice{padding:13px 16px;background:#101725;border:1px solid #344159;border-radius:10px;color:#aab6c8;font-size:12px;margin-bottom:18px}.notice code{color:var(--mint)}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-bottom:70px}.card{background:linear-gradient(#121927,#0d121c);border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:.2s;position:relative}.card:hover{transform:translateY(-5px);border-color:#40516c}.preview{height:285px;position:relative;background:radial-gradient(circle at 50% 35%,#54a8ff20,transparent 60%),#090e17}.preview canvas{width:100%;height:100%}.badge{position:absolute;top:11px;left:11px;background:#070a10bb;border:1px solid #fff1;padding:6px 8px;border-radius:7px;font-size:9px;letter-spacing:1px;font-weight:900}.like{position:absolute;right:11px;top:11px;z-index:3;width:34px;height:34px;border-radius:50%;border:1px solid #ffffff18;background:#070a10bb;color:#9aa7bb;font-size:15px}.like.active{color:#ff7188;border-color:#ff718855}.body{padding:14px}.title{font-weight:800;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.creator{color:var(--muted);font-size:12px;margin-top:5px;cursor:pointer}.creator:hover{color:#fff}.meta{display:flex;gap:12px;color:#6f7d92;font-size:10px;margin-top:8px}.cardact{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:12px}.cardact button,.cardact a{min-height:36px;background:#161e2c;border:1px solid var(--line);color:#fff;border-radius:9px;font-size:11px;font-weight:800;text-decoration:none;display:grid;place-items:center}.cardact .full{grid-column:1/-1}.empty{text-align:center;padding:80px;color:var(--muted)}footer{border-top:1px solid #fff1;padding:25px 5%;display:flex;justify-content:space-between;color:#657188;font-size:12px}.modal{position:fixed;inset:0;z-index:60;display:grid;place-items:center;padding:18px}.back{position:absolute;inset:0;background:#000c;backdrop-filter:blur(8px)}.modalbox{position:relative;z-index:1;background:#0e1420;border:1px solid #2b394f;border-radius:20px;padding:27px;width:min(620px,100%);max-height:94vh;overflow:auto;box-shadow:0 30px 90px #000b}.close{position:absolute;right:15px;top:8px;background:none;border:0;color:#7f8da4;font-size:30px}.types{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:18px 0}.type{padding:11px;border-radius:10px;background:var(--panel);border:1px solid var(--line);color:#aeb9ca;font-weight:800}.type.active{border-color:var(--mint);color:#fff}.drop{height:140px;border:1px dashed #42516a;border-radius:14px;background:#0a101a;display:grid;place-items:center;align-content:center;gap:5px;text-align:center}.drop input{display:none}.drop strong{font-size:13px}.drop small{color:var(--muted)}.field{display:block;color:#aab6c8;font-size:12px;font-weight:800;margin-top:13px}.field input{width:100%;margin-top:6px;padding:11px;background:#0a101a;border:1px solid var(--line);border-radius:9px;color:#fff;outline:0}.uprev{margin-top:14px;padding:8px;border:1px solid var(--line);border-radius:12px;display:flex;align-items:center;gap:12px}.uprev canvas{width:100px;height:115px;background:#090e17;border-radius:8px}.err{color:#ff637b;font-size:12px;min-height:18px;margin-top:8px}.fullbtn{width:100%;margin-top:14px}.viewer{width:min(980px,100%);display:grid;grid-template-columns:1fr 320px;gap:18px}.vc{min-height:560px;background:radial-gradient(circle at 50% 35%,#54a8ff20,transparent 58%),#090e17;border-radius:14px;overflow:hidden}.vc canvas{width:100%;height:100%}.vi{align-self:center;padding:15px}.vi h2{margin:4px 0}.vi .btn{width:100%;margin-top:9px}.muted{color:var(--muted);font-size:13px;line-height:1.6}.detail{display:grid;grid-template-columns:1fr 390px;gap:24px;margin:42px 0 70px}.detailviewer{height:620px;background:radial-gradient(circle at 50% 35%,#54a8ff20,transparent 58%),#090e17;border:1px solid var(--line);border-radius:18px;overflow:hidden}.detailviewer canvas{width:100%;height:100%}.detailinfo{align-self:center}.detailinfo h1{font-size:44px;letter-spacing:-2px;margin:8px 0}.pill{display:inline-flex;padding:6px 9px;border:1px solid var(--line);border-radius:999px;color:#aeb9ca;font-size:10px;font-weight:800}.bigmeta{display:flex;gap:18px;color:#7d8ba1;margin:16px 0}.bigactions{display:grid;gap:9px;margin-top:20px}.profile{margin:45px 0 70px}.profiletop{padding:25px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(100deg,#111927,#0c121d);display:flex;align-items:center;gap:18px}.avatar{width:70px;height:70px;border-radius:14px;background:#101a28;display:grid;place-items:center;font-weight:900;font-size:25px;color:var(--mint);border:1px solid var(--line)}.profiletop h1{margin:0 0 5px}.profiletop p{margin:0;color:var(--muted)}.backlink{display:inline-flex;margin-bottom:15px;color:#9daac0;text-decoration:none}.backlink:hover{color:#fff}
-@media(max-width:950px){.grid{grid-template-columns:repeat(3,1fr)}.hero{grid-template-columns:1fr}.orb{display:none}.detail{grid-template-columns:1fr}.detailviewer{height:520px}}
-@media(max-width:700px){.top{padding:0 12px;height:72px;margin-bottom:45px}.tabs{position:absolute;top:72px;left:0;width:100%;justify-content:center;background:#080b12f5;padding:7px}.top .uploadtop{font-size:11px;padding:10px}.grid{grid-template-columns:repeat(2,1fr)}.head{align-items:stretch;flex-direction:column}.search{flex:1}.featured{align-items:flex-start;flex-direction:column}.viewer{grid-template-columns:1fr}.vc{min-height:420px}.detailinfo h1{font-size:34px}footer{flex-direction:column;gap:8px}}
-@media(max-width:450px){.grid{grid-template-columns:1fr}.preview{height:320px}.hero h1{letter-spacing:-2px}.stats{gap:15px}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MineHub - منصة سكنات ماينكرافت</title>
+  <!-- Tailwind CSS للتصميم -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- مكتبة skinview3d لعرض السكنات 3D -->
+  <script src="https://bs-community.github.io/skinview3d/js/skinview3d.bundle.js"></script>
 </head>
-<body>
-<header class="top"><a class="logo" href="#"><span class="cube">◆</span>Mine<b>Hub</b></a><nav class="tabs"><button class="tab active" data-kind="skin">Skins</button><button class="tab" data-kind="cape">Capes</button></nav><button class="btn" id="authBtn">Sign in</button><button class="btn primary uploadtop" id="uploadTop">＋ Upload Skin</button></header>
-<main id="app">
-<section class="hero" id="home"><div class="hero-glow"></div><div><div class="ey">MINECRAFT CREATOR HUB</div><h1>Show off your <span>best look.</span></h1><p>Upload Minecraft skins and capes, preview them in 3D, and let the community discover, like, and download your creations.</p><div class="actions"><button class="btn primary" id="heroUpload">Upload a Skin</button><button class="btn" id="explore">Explore Gallery</button></div><div class="stats"><div><b id="skinCount">0</b><small>SKINS</small></div><div><b id="capeCount">0</b><small>CAPES</small></div><div><b>3D</b><small>PREVIEW</small></div></div></div><div class="orb"><i></i><div class="mini">3D<br><b>PREVIEW</b></div></div></section>
-<section class="featured"><div><div class="ey">MINEHUB COMMUNITY</div><h2>Your style <span>belongs here.</span></h2><p>Publish a creation and build your creator profile.</p></div><button class="btn primary" id="featuredUpload">＋ Upload Creation</button></section>
-<section class="head" id="gallery"><div><div class="ey">COMMUNITY GALLERY</div><h2 id="sectionTitle">Latest Skins</h2></div><div class="tools"><label class="search">⌕ <input id="search" placeholder="Search skins..."></label><select id="sort"><option value="new">Newest</option><option value="popular">Most liked</option><option value="downloads">Most downloaded</option><option value="name">Name</option><option value="old">Oldest</option></select></div></section>
-<div class="notice" id="notice">Demo mode is active. Add your Firebase Web config in <code>index.html</code> to enable public uploads, profiles, global likes, downloads and owner-only deletion.</div>
-<div class="grid" id="grid"></div><div class="empty hidden" id="empty">No creations found.</div>
-<div id="page" class="hidden"></div>
-</main>
-<footer><span>© 2026 MineHub</span><span>Built for Minecraft creators • PNG only</span></footer>
+<body class="bg-gray-900 text-white font-sans min-h-screen flex flex-col">
 
-<div class="modal hidden" id="uploadModal"><div class="back" data-close></div><div class="modalbox"><button class="close" data-close>×</button><div class="ey">UPLOAD CREATION</div><h2>Publish to <span>MineHub</span></h2><div class="types"><button class="type active" data-type="skin">🧍 Skin</button><button class="type" data-type="cape">🧥 Cape</button></div><label class="drop" id="drop"><input id="file" type="file" accept="image/png"><strong id="fileName">↑ Choose a PNG or drop it here</strong><small>PNG • max 5 MB</small></label><label class="field">Title<input id="title" maxlength="50" placeholder="e.g. Neon Warrior"></label><label class="field">Creator name<input id="creator" maxlength="24" placeholder="Public creator name"><small style="display:block;color:var(--muted);font-weight:500;margin-top:5px">This name is public. Your Microsoft email and login details are not displayed.</small></label><div class="uprev"><canvas id="upcanvas" width="260" height="300"></canvas><span class="muted">Live 3D preview<br>Drag to rotate.</span></div><button class="btn primary fullbtn" id="publish">Publish to MineHub</button><div class="err" id="err"></div></div></div>
+  <!-- الهيدر / القائمة العلوية -->
+  <header class="bg-gray-800 border-b border-gray-700 p-4 flex justify-between items-center px-6">
+    <div class="flex items-center gap-2">
+      <span class="text-3xl font-extrabold text-green-500 tracking-wider">MINE<span class="text-white">HUB</span></span>
+    </div>
+    
+    <div id="auth-buttons" class="flex gap-3">
+      <button onclick="openModal('login-modal')" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg font-bold transition">تسجيل الدخول</button>
+      <button onclick="openModal('signup-modal')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg font-bold transition">حساب جديد</button>
+    </div>
 
-<div class="modal hidden" id="viewerModal"><div class="back" data-vclose></div><div class="modalbox viewer"><button class="close" data-vclose>×</button><div class="vc"><canvas id="vcanvas"></canvas></div><div class="vi"><div class="ey" id="vkind">SKIN</div><h2 id="vtitle">Skin</h2><p class="muted">by <span id="vcreator">Creator</span></p><div class="bigmeta"><span>♥ <b id="vlikes">0</b></span><span>↓ <b id="vdownloads">0</b></span></div><a id="download" class="btn primary" target="_blank" rel="noopener">↓ Download PNG</a><button id="delete" class="btn danger hidden">Delete my upload</button><button id="profileBtn" class="btn">View Creator</button><p class="muted">Drag to rotate • scroll/pinch to zoom</p></div></div></div>
+    <div id="user-profile" class="hidden flex items-center gap-4">
+      <span id="user-email" class="text-gray-300 font-semibold"></span>
+      <button onclick="openModal('upload-modal')" class="bg-green-600 hover:bg-green-500 px-4 py-2 rounded-lg font-bold transition">+ نشر سكن</button>
+      <button onclick="logout()" class="bg-red-600 hover:bg-red-500 px-3 py-2 rounded-lg text-sm font-bold transition">خروج</button>
+    </div>
+  </header>
 
-<script type="module">
-import * as skinview3d from "https://cdn.jsdelivr.net/npm/skinview3d@3.4.2/+esm";
-import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+  <!-- القسم الرئيسي -->
+  <main class="flex-1 container mx-auto p-6">
+    <div class="text-center my-8">
+      <h1 class="text-4xl font-black mb-2">مرحباً بك في <span class="text-green-500">MineHub</span></h1>
+      <p class="text-gray-400">استكشف وشارك أفضل سكنات ماينكرافت مع المجتمعات</p>
+    </div>
 
-// MineHub Supabase connection
-const SUPABASE_URL = "https://pgeeipkypfubbsgrhgfq.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_RBOQ5dwOMFxmccx6acKpwQ_UJErQioD";
-const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
-const BUCKET = "minehub";
+    <!-- شبكة السكنات (Skins Grid) -->
+    <div id="skins-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <!-- يتم تحميل السكنات هنا ديناميكياً -->
+    </div>
+  </main>
 
-const demos=[
-{id:"d1",kind:"skin",title:"Steve Classic",creator:"MineHub",url:"https://minotar.net/skin/Steve",likes:124,downloads:83,time:5},
-{id:"d2",kind:"skin",title:"Alex Classic",creator:"MineHub",url:"https://minotar.net/skin/Alex",likes:98,downloads:71,time:4},
-{id:"d3",kind:"skin",title:"Creeper Style",creator:"MineHub",url:"https://minotar.net/skin/Creeper",likes:81,downloads:59,time:3},
-{id:"d4",kind:"skin",title:"Enderman Style",creator:"MineHub",url:"https://minotar.net/skin/Enderman",likes:73,downloads:44,time:2}
-];
-let currentKind="skin",items=[...demos],user=null,cloud=true,upType="skin",upFile=null,upViewer=null,vViewer=null,vItem=null,liked=new Set();
-const $=id=>document.getElementById(id);
-const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[c]));
-function hashParts(){return location.hash.replace(/^#/,'').split('/').filter(Boolean).map(decodeURIComponent)}
-function isDemo(x){return x.id?.startsWith('d')}
-function timeVal(x){return x.created_at?new Date(x.created_at).getTime():(x.time||0)}
-function setKind(k){currentKind=k;document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.kind===k));$('sectionTitle').textContent=k==='skin'?'Latest Skins':'Latest Capes';$('search').placeholder='Search '+(k==='skin'?'skins':'capes')+'...';$('uploadTop').textContent='＋ Upload '+(k==='skin'?'Skin':'Cape');render()}
-document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{location.hash='';setKind(b.dataset.kind)});
-$('explore').onclick=()=>{location.hash='';$('gallery').scrollIntoView({behavior:'smooth'})};$('featuredUpload').onclick=()=>openUpload(currentKind);$('uploadTop').onclick=()=>openUpload(currentKind);$('heroUpload').onclick=()=>openUpload('skin');
-function openUpload(k){upType=k;upFile=null;$('uploadModal').classList.remove('hidden');$('fileName').textContent='↑ Choose a PNG or drop it here';$('file').value='';$('title').value='';$('creator').value='';$('err').textContent='';document.querySelectorAll('.type').forEach(b=>b.classList.toggle('active',b.dataset.type===k));if(upViewer){upViewer.dispose();upViewer=null}}
-document.querySelectorAll('.type').forEach(b=>b.onclick=()=>openUpload(b.dataset.type));document.querySelectorAll('[data-close]').forEach(x=>x.onclick=closeUpload);document.querySelectorAll('[data-vclose]').forEach(x=>x.onclick=closeViewer);
-function closeUpload(){ $('uploadModal').classList.add('hidden'); if(upViewer){upViewer.dispose();upViewer=null} }
-function closeViewer(){ $('viewerModal').classList.add('hidden'); if(vViewer){vViewer.dispose();vViewer=null} }
-$('file').onchange=e=>useFile(e.target.files[0]);$('drop').ondragover=e=>{e.preventDefault();$('drop').style.borderColor='var(--mint)'};$('drop').ondragleave=()=>$('drop').style.borderColor='';$('drop').ondrop=e=>{e.preventDefault();$('drop').style.borderColor='';useFile(e.dataTransfer.files[0])};
-async function useFile(f){$('err').textContent='';if(!f)return;if(f.type!=='image/png')return $('err').textContent='Only PNG files are allowed.';if(f.size>5*1024*1024)return $('err').textContent='Maximum file size is 5 MB.';upFile=f;$('fileName').textContent=f.name;if(upViewer)upViewer.dispose();let u=URL.createObjectURL(f);upViewer=new skinview3d.SkinViewer({canvas:$('upcanvas'),width:260,height:300,skin:upType==='skin'?u:'https://minotar.net/skin/Steve'});upViewer.autoRotate=true;upViewer.autoRotateSpeed=.7;upViewer.controls.enableRotate=true;upViewer.controls.enableZoom=true;if(upType==='cape')await upViewer.loadCape(u).catch(()=>{});}
-$('authBtn').onclick=async()=>{
-  if(user){
-    const {error}=await supabase.auth.signOut();
-    if(error) alert(error.message||'Could not sign out.');
-    return;
-  }
-  $('authBtn').disabled=true;
-  $('authBtn').textContent='Connecting…';
-  try{
-    const {error}=await supabase.auth.signInWithOAuth({
-      provider:'azure',
-      options:{
-        redirectTo:location.origin+location.pathname,
-        scopes:'openid profile email'
-      }
-    });
-    if(error) throw error;
-  }catch(e){
-    console.error(e);
-    alert(e.message||'Could not connect your Microsoft account. Check Supabase Azure provider settings.');
-    $('authBtn').disabled=false;
-    $('authBtn').textContent='Sign in';
-  }
-};
-$('publish').onclick=async()=>{if(!user)return $('err').textContent='Please sign in with your Microsoft account before publishing.';if(!upFile)return $('err').textContent='Choose a PNG first.';let title=$('title').value.trim()||upFile.name.replace(/\.png$/i,'');let creator=$('creator').value.trim()||'Anonymous Creator';$('publish').disabled=true;$('publish').textContent='Uploading…';try{
-  const safe=upFile.name.replace(/[^a-zA-Z0-9._-]/g,'_');
-  const path=`${user.id}/${upType}/${Date.now()}-${crypto.randomUUID()}-${safe}`;
-  const {error:uploadError}=await supabase.storage.from(BUCKET).upload(path,upFile,{contentType:'image/png',upsert:false});
-  if(uploadError) throw uploadError;
-  const {data:pub}=supabase.storage.from(BUCKET).getPublicUrl(path);
-  const {data:row,error:dbError}=await supabase.from('uploads').insert({kind:upType,title,creator,url:pub.publicUrl,storage_path:path,owner_id:user.id,likes:0,downloads:0}).select().single();
-  if(dbError) throw dbError;
-  closeUpload();await loadCloud();location.hash='';setKind(upType);
-}catch(e){console.error(e);$('err').textContent=e.message||'Upload failed. Check Supabase setup.'}$('publish').disabled=false;$('publish').textContent='Publish to MineHub'};
-$('search').oninput=render;$('sort').onchange=render;
-function stats(){ $('skinCount').textContent=items.filter(x=>x.kind==='skin').length; $('capeCount').textContent=items.filter(x=>x.kind==='cape').length }
-function likeLocalKey(id){return 'minehub_liked_'+id}
-function loadLiked(){items.forEach(x=>{if(localStorage.getItem(likeLocalKey(x.id)))liked.add(x.id)})}
-function render(){if(hashParts().length){renderRoute();return}let q=$('search').value.toLowerCase(),a=items.filter(x=>x.kind===currentKind&&(`${x.title} ${x.creator}`).toLowerCase().includes(q));let s=$('sort').value;a.sort((x,y)=>s==='name'?x.title.localeCompare(y.title):s==='popular'?(y.likes||0)-(x.likes||0):s==='downloads'?(y.downloads||0)-(x.downloads||0):s==='old'?timeVal(x)-timeVal(y):timeVal(y)-timeVal(x));$('grid').innerHTML='';stats();$('empty').classList.toggle('hidden',a.length>0);$('page').classList.add('hidden');$('grid').classList.remove('hidden');a.forEach(makeCard)}
-function makeCard(x){let c=document.createElement('article');c.className='card';c.innerHTML=`<div class="preview"><canvas></canvas><span class="badge">${x.kind.toUpperCase()}</span><button class="like">♡</button></div><div class="body"><div class="title"></div><div class="creator"></div><div class="meta"><span>♥ <b class="ln">${x.likes||0}</b></span><span>↓ <b class="dn">${x.downloads||0}</b></span></div><div class="cardact"><button class="view full">View 3D</button><a target="_blank" rel="noopener">↓ Download</a><button class="danger del hidden">Delete</button></div></div>`;$('grid').append(c);c.querySelector('.title').textContent=x.title;c.querySelector('.creator').textContent='by '+x.creator;c.querySelector('.creator').onclick=()=>location.hash='profile/'+encodeURIComponent(x.owner_id||x.creator);let like=c.querySelector('.like');if(liked.has(x.id)){like.classList.add('active');like.textContent='♥'}like.onclick=()=>toggleLike(x,c);c.querySelector('a').removeAttribute('href');c.querySelector('a').removeAttribute('target');c.querySelector('a').onclick=()=>downloadFile(x);c.querySelector('.view').onclick=()=>{location.hash='item/'+encodeURIComponent(x.id)};if(user&&x.owner_id===user.id){c.querySelector('.del').classList.remove('hidden');c.querySelector('.del').onclick=()=>removeItem(x)}let sv=new skinview3d.SkinViewer({canvas:c.querySelector('canvas'),width:300,height:300,skin:x.kind==='skin'?x.url:'https://minotar.net/skin/Steve'});sv.autoRotate=true;sv.autoRotateSpeed=.8;sv.zoom=.85;sv.controls.enableRotate=true;sv.controls.enableZoom=true;if(x.kind==='cape')sv.loadCape(x.url).catch(()=>{});}
-async function toggleLike(x,c){if(isDemo(x)){let k='minehub_demo_likes_'+x.id,n=Number(localStorage.getItem(k)||x.likes||0),on=liked.has(x.id);n+=on?-1:1;localStorage.setItem(k,n);x.likes=n;if(on)liked.delete(x.id);else liked.add(x.id);c.querySelector('.like').classList.toggle('active',!on);c.querySelector('.like').textContent=on?'♡':'♥';c.querySelector('.ln').textContent=n;return}let on=liked.has(x.id);try{const {data,error}=await supabase.rpc('toggle_like',{p_upload_id:x.id,p_user_id:user.id,p_like:!on});if(error)throw error;x.likes=Number(data ?? x.likes)+(on?-1:1);if(on){liked.delete(x.id);localStorage.removeItem(likeLocalKey(x.id))}else{liked.add(x.id);localStorage.setItem(likeLocalKey(x.id),'1')}c.querySelector('.like').classList.toggle('active',!on);c.querySelector('.like').textContent=on?'♡':'♥';c.querySelector('.ln').textContent=x.likes}catch(e){console.warn(e);alert('Could not update like.')}}
-async function downloadFile(x){
-  try{
-    const response=await fetch(x.url);
-    if(!response.ok) throw new Error('Download failed');
-    const blob=await response.blob();
-    const a=document.createElement('a');
-    const objectUrl=URL.createObjectURL(blob);
-    a.href=objectUrl;
-    a.download=(x.title||'minecraft-skin').replace(/[^a-zA-Z0-9._-]/g,'_')+'.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    URL.revokeObjectURL(objectUrl);
-    await recordDownload(x);
-  }catch(e){
-    console.error(e);
-    // Fallback: ask the browser to download/open the file directly.
-    const a=document.createElement('a');
-    a.href=x.url;
-    a.download=(x.title||'minecraft-skin').replace(/[^a-zA-Z0-9._-]/g,'_')+'.png';
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-    await recordDownload(x);
-  }
-}
-async function recordDownload(x){if(isDemo(x))return;try{const {error}=await supabase.rpc('record_download',{p_upload_id:x.id});if(!error)x.downloads=Number(x.downloads||0)+1}catch(e){console.warn(e)}}
-function openViewer(x){vItem=x;$('viewerModal').classList.remove('hidden');$('vtitle').textContent=x.title;$('vcreator').textContent=x.creator;$('vkind').textContent=x.kind.toUpperCase();$('vlikes').textContent=x.likes||0;$('vdownloads').textContent=x.downloads||0;$('download').removeAttribute('href');$('download').removeAttribute('target');$('download').onclick=()=>downloadFile(x);$('delete').classList.toggle('hidden',!(user&&x.owner_id===user.id));$('delete').onclick=()=>removeItem(x,true);$('profileBtn').onclick=()=>{closeViewer();location.hash='profile/'+encodeURIComponent(x.owner_id||x.creator)};if(vViewer)vViewer.dispose();vViewer=new skinview3d.SkinViewer({canvas:$('vcanvas'),width:600,height:600,skin:x.kind==='skin'?x.url:'https://minotar.net/skin/Steve'});vViewer.autoRotate=true;vViewer.autoRotateSpeed=.75;vViewer.zoom=.85;vViewer.controls.enableRotate=true;vViewer.controls.enableZoom=true;if(x.kind==='cape')vViewer.loadCape(x.url).catch(()=>{});}
-async function removeItem(x,close=false){if(!user||x.owner_id!==user.id)return;if(!confirm('Delete this upload from MineHub?'))return;try{const {error}=await supabase.from('uploads').delete().eq('id',x.id);if(error)throw error;items=items.filter(i=>i.id!==x.id);if(close)closeViewer();render()}catch(e){alert(e.message||'Could not delete this upload.')}}
-function renderRoute(){let p=hashParts();$('grid').classList.add('hidden');$('empty').classList.add('hidden');$('page').classList.remove('hidden');if(p[0]==='item'){let x=items.find(i=>i.id===p[1]);if(!x){$('page').innerHTML='<div class="empty">Creation not found.</div>';return}$('page').innerHTML=`<section class="detail"><div class="detailviewer"><canvas id="detailCanvas"></canvas></div><div class="detailinfo"><a class="backlink" href="#">← Back to gallery</a><div class="pill">${x.kind.toUpperCase()}</div><h1>${esc(x.title)}</h1><p class="muted">Created by <b>${esc(x.creator)}</b></p><div class="bigmeta"><span>♥ <b>${x.likes||0}</b> likes</span><span>↓ <b>${x.downloads||0}</b> downloads</span></div><div class="bigactions"><button class="btn primary" id="detailDownload">↓ Download PNG</button><button class="btn" id="detailCreator">View Creator Profile</button>${user&&x.owner_id===user.id?'<button class="btn danger" id="detailDelete">Delete my upload</button>':''}</div><p class="muted">Drag the character to rotate it. Scroll or pinch to zoom.</p></div></section>`;let cv=$('detailCanvas');let sv=new skinview3d.SkinViewer({canvas:cv,width:700,height:620,skin:x.kind==='skin'?x.url:'https://minotar.net/skin/Steve'});sv.autoRotate=true;sv.autoRotateSpeed=.65;sv.zoom=.9;sv.controls.enableRotate=true;sv.controls.enableZoom=true;if(x.kind==='cape')sv.loadCape(x.url).catch(()=>{});$('detailCreator').onclick=()=>location.hash='profile/'+encodeURIComponent(x.owner_id||x.creator);$('detailDownload').onclick=()=>downloadFile(x);if($('detailDelete'))$('detailDelete').onclick=()=>removeItem(x)}else if(p[0]==='profile'){let uid=p[1],list=items.filter(i=>(i.owner_id||i.creator)===uid),name=list[0]?.creator||uid;$('page').innerHTML=`<section class="profile"><a class="backlink" href="#">← Back to gallery</a><div class="profiletop"><div class="avatar">${esc((name||'?')[0].toUpperCase())}</div><div><h1>${esc(name)}</h1><p>${list.length} creation${list.length===1?'':'s'} on MineHub</p></div></div><div class="head"><div><div class="ey">CREATOR GALLERY</div><h2>Creations by <span>${esc(name)}</span></h2></div></div><div class="grid" id="profileGrid"></div></section>`;let g=$('profileGrid');g.innerHTML='';list.forEach(x=>makeCardInto(x,g))}else{location.hash=''}}
-function makeCardInto(x,g){let c=document.createElement('article');c.className='card';c.innerHTML=`<div class="preview"><canvas></canvas><span class="badge">${x.kind.toUpperCase()}</span></div><div class="body"><div class="title">${esc(x.title)}</div><div class="creator">by ${esc(x.creator)}</div><div class="meta"><span>♥ ${x.likes||0}</span><span>↓ ${x.downloads||0}</span></div><div class="cardact"><button class="view full">View 3D</button></div></div>`;g.append(c);c.querySelector('.view').onclick=()=>location.hash='item/'+encodeURIComponent(x.id);let sv=new skinview3d.SkinViewer({canvas:c.querySelector('canvas'),width:300,height:300,skin:x.kind==='skin'?x.url:'https://minotar.net/skin/Steve'});sv.autoRotate=true;sv.autoRotateSpeed=.8;sv.zoom=.85;sv.controls.enableRotate=true;sv.controls.enableZoom=true;if(x.kind==='cape')sv.loadCape(x.url).catch(()=>{})}
-async function loadCloud(){try{const {data,error}=await supabase.from('uploads').select('*').order('created_at',{ascending:false});if(error)throw error;items=[...demos,...(data||[])];loadLiked();render()}catch(e){console.error(e);$('notice').textContent='Supabase database is not configured yet. Create the uploads table and policies from the included README.';$('notice').classList.remove('hidden')}}
-loadLiked();render();window.addEventListener('hashchange',render);
-function updateAuthUI(){
-  const b=$('authBtn');
-  if(!b)return;
-  if(user){
-    b.textContent='Sign out';
-    b.classList.add('signed');
-    b.title='Signed in';
-  }else{
-    b.textContent='Sign in';
-    b.classList.remove('signed');
-    b.title='Sign in with Microsoft';
-  }
-}
-async function init(){
-  try{
-    const {data,error}=await supabase.auth.getSession();
-    if(error)throw error;
-    user=data.session?.user||null;
-    updateAuthUI();
-    await loadCloud();
-  }catch(e){
-    console.error(e);
-    $('notice').textContent='Could not connect to Supabase. Check your Supabase URL/key and authentication settings.';
-    $('notice').classList.remove('hidden');
-    updateAuthUI();
-  }
-}
-supabase.auth.onAuthStateChange((_event,session)=>{
-  user=session?.user||null;
-  updateAuthUI();
-  if(user) loadCloud();
-  render();
-});
-init();
-</script>
-</body></html>
+  <!-- النافذة المنبثقة: تسجيل الدخول -->
+  <div id="login-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+    <div class="bg-gray-800 p-6 rounded-xl w-full max-w-md relative border border-gray-700">
+      <h2 class="text-2xl font-bold mb-4">تسجيل الدخول</h2>
+      <input type="email" id="login-email" placeholder="البريد الإلكتروني" class="w-full bg-gray-700 p-3 rounded mb-3 outline-none focus:ring-2 focus:ring-green-500">
+      <input type="password" id="login-pass" placeholder="كلمة المرور" class="w-full bg-gray-700 p-3 rounded mb-4 outline-none focus:ring-2 focus:ring-green-500">
+      <div class="flex justify-end gap-2">
+        <button onclick="closeModal('login-modal')" class="bg-gray-600 px-4 py-2 rounded">إلغاء</button>
+        <button onclick="login()" class="bg-green-600 px-4 py-2 rounded font-bold">دخول</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- النافذة المنبثقة: إنشاء حساب -->
+  <div id="signup-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+    <div class="bg-gray-800 p-6 rounded-xl w-full max-w-md relative border border-gray-700">
+      <h2 class="text-2xl font-bold mb-4">إنشاء حساب جديد</h2>
+      <input type="email" id="signup-email" placeholder="البريد الإلكتروني" class="w-full bg-gray-700 p-3 rounded mb-3 outline-none focus:ring-2 focus:ring-green-500">
+      <input type="password" id="signup-pass" placeholder="كلمة المرور" class="w-full bg-gray-700 p-3 rounded mb-4 outline-none focus:ring-2 focus:ring-green-500">
+      <div class="flex justify-end gap-2">
+        <button onclick="closeModal('signup-modal')" class="bg-gray-600 px-4 py-2 rounded">إلغاء</button>
+        <button onclick="signup()" class="bg-green-600 px-4 py-2 rounded font-bold">تسجيل</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- النافذة المنبثقة: رفع سكن -->
+  <div id="upload-modal" class="fixed inset-0 bg-black/70 hidden items-center justify-center p-4 z-50">
+    <div class="bg-gray-800 p-6 rounded-xl w-full max-w-md relative border border-gray-700">
+      <h2 class="text-2xl font-bold mb-4">نشر سكن جديد</h2>
+      <input type="text" id="skin-title" placeholder="اسم السكن" class="w-full bg-gray-700 p-3 rounded mb-3 outline-none focus:ring-2 focus:ring-green-500">
+      <label class="block mb-2 text-sm text-gray-400">اختر صورة السكن (.png):</label>
+      <input type="file" id="skin-file" accept=".png" class="w-full bg-gray-700 p-2 rounded mb-4 text-sm">
+      <div class="flex justify-end gap-2">
+        <button onclick="closeModal('upload-modal')" class="bg-gray-600 px-4 py-2 rounded">إلغاء</button>
+        <button onclick="uploadSkin()" class="bg-green-600 px-4 py-2 rounded font-bold">نشر</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ملف البرمجة والخلفية -->
+  <script type="module" src="app.js"></script>
+</body>
+</html>
